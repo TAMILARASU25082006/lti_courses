@@ -1,0 +1,37 @@
+<nav class="navbar">
+  <div class="container nav-container">
+    <a href="/" class="brand-logo">
+      <img src="/images/lti_logo.jpg" alt="LTI - Learn, Think & Innovate Logo">
+      <div class="brand-text">
+        <div class="brand-title">LTI<span>_COURSES</span></div>
+        <div class="brand-tagline">Learn • Think • Innovate</div>
+      </div>
+    </a>
+
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+      ☰
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/" class="nav-link <%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
+      <li><a href="/about" class="nav-link <%= currentPath === '/about' ? 'active' : '' %>">About Us</a></li>
+      <li><a href="/courses" class="nav-link <%= currentPath.startsWith('/courses') ? 'active' : '' %>">Courses</a></li>
+      <li><a href="/projects" class="nav-link <%= currentPath.startsWith('/projects') ? 'active' : '' %>">Projects</a></li>
+      <li><a href="/contact" class="nav-link <%= currentPath === '/contact' ? 'active' : '' %>">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <% if (currentUser) { %>
+        <% if (isAdmin) { %>
+          <a href="/admin" class="btn btn-gold btn-sm">Admin Dashboard</a>
+        <% } else { %>
+          <a href="/profile" class="btn btn-gold btn-sm">My Dashboard</a>
+        <% } %>
+        <a href="/logout" class="btn btn-outline btn-sm">Logout</a>
+      <% } else { %>
+        <a href="/login" class="btn btn-outline btn-sm">Login</a>
+        <a href="/register" class="btn btn-gold btn-sm">Register Now</a>
+      <% } %>
+    </div>
+  </div>
+</nav>

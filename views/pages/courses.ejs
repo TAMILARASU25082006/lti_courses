@@ -1,0 +1,173 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section" style="padding-top: 60px;">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">OUR PRACTICAL COURSES</div>
+      <h2>DISCOVER OUR <span class="text-gold">TECHNOLOGY COURSES</span></h2>
+      <p>LTI provides three comprehensive courses designed for practical skills acquisition, real-world project building, and technical innovation.</p>
+    </div>
+
+    <!-- COURSE 1: ROBOTICS -->
+    <div id="robotics" style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px; margin-bottom: 60px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px;">
+        <div>
+          <div class="badge">COURSE 1 • HARDWARE & AUTOMATION</div>
+          <h3 style="font-size: 2.2rem; color: var(--text-white); margin-top: 8px;">ROBOTICS EDUCATION</h3>
+        </div>
+        <a href="/register?course=Robotics+Education" class="btn btn-gold">Register for Robotics</a>
+      </div>
+
+      <p style="color: var(--text-grey); font-size: 1.05rem; margin-bottom: 30px;">
+        Hands-on robotics training structured into 3 distinct learning progression levels. Students construct physical electronic circuits, interface ultrasonic/infrared sensors, program Arduino microcontrollers in C/C++, and design autonomous mobile robots.
+      </p>
+
+      <h4 style="color: var(--golden-yellow); font-size: 1.3rem; margin-bottom: 20px;">3-LEVEL LEARNING PROGRESSION:</h4>
+
+      <div class="level-progression">
+        <!-- Level 1 -->
+        <div class="level-card">
+          <div class="level-badge">LEVEL 1</div>
+          <h4 class="level-title">SENSOR ROBOTICS</h4>
+          <div class="level-eligibility">Eligibility: 4th to 10th Standard</div>
+          <p style="font-size: 0.88rem; color: var(--text-grey); margin-bottom: 12px;">Foundation module introducing basic electronic components, power circuits, motor control, and sensor operations.</p>
+          <ul class="topic-list">
+            <li>Electronics and circuits</li>
+            <li>Sensors and motors</li>
+            <li>Introduction to robotics</li>
+            <li>Build and test real robots</li>
+          </ul>
+          <a href="/register?course=Robotics+Education&level=Level+1+–+SENSOR+ROBOTICS" class="btn btn-outline btn-sm" style="width: 100%; margin-top: 15px;">Enroll Level 1</a>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="level-card">
+          <div class="level-badge">LEVEL 2</div>
+          <h4 class="level-title">LOGIC & ROBOTICS</h4>
+          <div class="level-eligibility">Eligibility: 5th Standard & Above</div>
+          <p style="font-size: 0.88rem; color: var(--text-grey); margin-bottom: 12px;">Intermediate module focusing on breadboard prototyping, digital logic gates, and wireless transmission systems.</p>
+          <ul class="topic-list">
+            <li>Breadboard circuits</li>
+            <li>Digital logic</li>
+            <li>Wireless systems</li>
+            <li>Advanced robotics</li>
+          </ul>
+          <a href="/register?course=Robotics+Education&level=Level+2+–+LOGIC+&+ROBOTICS" class="btn btn-outline btn-sm" style="width: 100%; margin-top: 15px;">Enroll Level 2</a>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="level-card" style="border-color: var(--border-color);">
+          <div class="level-badge">LEVEL 3</div>
+          <h4 class="level-title">CODING & AUTOMATION</h4>
+          <div class="level-eligibility">Eligibility: 5th Standard & Above</div>
+          <p style="font-size: 0.88rem; color: var(--text-grey); margin-bottom: 12px;">Advanced module introducing microcontroller programming in C/C++, sensor algorithm integration, and autonomous path control.</p>
+          <ul class="topic-list">
+            <li>Arduino & C/C++ programming</li>
+            <li>Sensors & wireless control</li>
+            <li>Advanced robotics</li>
+            <li>Real-world projects</li>
+          </ul>
+          <a href="/register?course=Robotics+Education&level=Level+3+–+CODING+&+AUTOMATION" class="btn btn-gold btn-sm" style="width: 100%; margin-top: 15px;">Enroll Level 3</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- COURSE 2: FULL STACK WEB DEVELOPMENT -->
+    <div id="fullstack" style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px; margin-bottom: 60px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px;">
+        <div>
+          <div class="badge text-gold" style="background: rgba(255,201,40,0.18);">🏆 200+ INTERNS SUCCESSFULLY TRAINED</div>
+          <h3 style="font-size: 2.2rem; color: var(--text-white); margin-top: 8px;">FULL STACK WEB DEVELOPMENT</h3>
+        </div>
+        <a href="/register?course=Full+Stack+Web+Development" class="btn btn-gold">Register for Full Stack</a>
+      </div>
+
+      <p style="color: var(--text-grey); font-size: 1.05rem; margin-bottom: 30px;">
+        Master full stack web development from frontend layout design to backend database architecture. Highlighted by our proven achievement of training 200+ interns in practical application development.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <div>
+          <h4 style="color: var(--golden-yellow); font-size: 1.2rem; margin-bottom: 14px;">COURSE CURRICULUM:</h4>
+          <ul class="topic-list" style="columns: 2; column-gap: 20px;">
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript (ES6+)</li>
+            <li>Responsive Design</li>
+            <li>Frontend Dev</li>
+            <li>Backend Dev</li>
+            <li>Node.js</li>
+            <li>Express.js</li>
+            <li>MongoDB Atlas</li>
+            <li>API Integration</li>
+            <li>Git & GitHub</li>
+            <li>Full Stack Projects</li>
+          </ul>
+        </div>
+
+        <div style="background: var(--primary-black); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <h4 style="color: var(--text-white); font-size: 1.1rem; margin-bottom: 10px;">COURSE HIGHLIGHTS:</h4>
+          <p style="color: var(--text-grey); font-size: 0.9rem; margin-bottom: 8px;">✓ 100% Practical hands-on coding</p>
+          <p style="color: var(--text-grey); font-size: 0.9rem; margin-bottom: 8px;">✓ Individual capstone web project development</p>
+          <p style="color: var(--text-grey); font-size: 0.9rem; margin-bottom: 8px;">✓ Git version control & GitHub portfolio</p>
+          <p style="color: var(--text-grey); font-size: 0.9rem;">✓ Taught by senior engineering mentors</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COURSE 3: UI/UX DESIGN WITH AI -->
+    <div id="uiux" style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px;">
+        <div>
+          <div class="badge">COURSE 3 • 1 MONTH CREATIVE PROGRAM</div>
+          <h3 style="font-size: 2.2rem; color: var(--text-white); margin-top: 8px;">UI/UX DESIGN WITH AI</h3>
+          <div style="color: var(--golden-yellow); font-weight: 600; font-size: 1rem; margin-top: 4px;">"TURN YOUR CREATIVITY INTO DIGITAL EXPERIENCES."</div>
+        </div>
+        <a href="/register?course=UI%2FUX+Design+with+AI" class="btn btn-gold">Register for UI/UX</a>
+      </div>
+
+      <p style="color: var(--text-grey); font-size: 1.05rem; margin-bottom: 30px;">
+        Learn to transform ideas into user-friendly digital products. Master modern UI/UX design principles, user research, wireframing, high-fidelity prototyping, and AI-assisted design workflow.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <div>
+          <h4 style="color: var(--golden-yellow); font-size: 1.2rem; margin-bottom: 14px;">DESIGN TOOLS COVERED:</h4>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+            <span style="background: var(--primary-black); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-weight: 600; color: var(--golden-yellow);">Miro</span>
+            <span style="background: var(--primary-black); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-weight: 600; color: var(--golden-yellow);">Figma</span>
+            <span style="background: var(--primary-black); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-weight: 600; color: var(--golden-yellow);">Framer</span>
+            <span style="background: var(--primary-black); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-weight: 600; color: var(--golden-yellow);">Behance</span>
+          </div>
+
+          <h4 style="color: var(--golden-yellow); font-size: 1.2rem; margin-bottom: 14px;">TOPICS COVERED:</h4>
+          <ul class="topic-list" style="columns: 2; column-gap: 20px;">
+            <li>Design Thinking</li>
+            <li>User Research</li>
+            <li>Wireframing</li>
+            <li>Prototyping</li>
+            <li>UI Design</li>
+            <li>UX Heuristics</li>
+            <li>Responsive Design</li>
+            <li>AI-Assisted Design</li>
+            <li>Portfolio Creation</li>
+            <li>Practical Challenges</li>
+          </ul>
+        </div>
+
+        <div style="background: var(--primary-black); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <h4 style="color: var(--text-white); font-size: 1.1rem; margin-bottom: 10px;">PROGRAM DURATION & HIGHLIGHTS:</h4>
+          <p style="color: var(--text-grey); font-size: 0.9rem; margin-bottom: 8px;"><strong>Duration:</strong> 1 Month Intensive Program</p>
+          <p style="color: var(--text-grey); font-size: 0.9rem; margin-bottom: 8px;">✓ Build a professional design portfolio on Behance</p>
+          <p style="color: var(--text-grey); font-size: 0.9rem; margin-bottom: 8px;">✓ Master AI prompt design for rapid wireframing</p>
+          <p style="color: var(--text-grey); font-size: 0.9rem;">✓ Hands-on real-world app interface redesigns</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

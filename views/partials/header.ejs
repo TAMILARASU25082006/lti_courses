@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'LTI_COURSES – Learn Today. Build Tomorrow. Innovate Beyond.' %></title>
+  <meta name="description" content="LTI (Learn, Think & Innovate) - Practical Technology Education in Robotics, Full Stack Web Development, and UI/UX Design with AI in Chennai.">
+  <meta name="keywords" content="LTI, LTI Courses, Robotics Education, Full Stack Web Development, UI/UX Design, Chennai EdTech">
+  <link rel="icon" type="image/jpeg" href="/images/lti_logo.jpg">
+
+  <!-- TAILWIND CSS CDN INTEGRATION -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primaryBlack: '#080808',
+            darkCharcoal: '#151515',
+            cardBg: '#16161a',
+            goldenYellow: '#FFC928',
+            goldHover: '#ffd65c',
+            textGrey: '#A0A0A0'
+          },
+          fontFamily: {
+            main: ['Outfit', 'sans-serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+    <link rel="stylesheet" href="/css/admin.css">
+  <% } %>
+</head>
+<body class="bg-primaryBlack text-white font-body antialiased">

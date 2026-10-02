@@ -1,0 +1,165 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="badge">LEARN TODAY • BUILD TOMORROW • INNOVATE BEYOND</div>
+      <h1>BUILD YOUR FUTURE WITH <span class="text-gold">TECHNOLOGY</span></h1>
+      <p>Discover practical technology education through Robotics, Full Stack Development, and AI-powered UI/UX Design. Learn new skills, build real projects, and turn your ideas into innovation.</p>
+      <div class="hero-buttons">
+        <a href="/courses" class="btn btn-gold">Explore Courses →</a>
+        <a href="/register" class="btn btn-outline">Join LTI</a>
+      </div>
+    </div>
+    <div class="hero-image-wrapper">
+      <img src="/images/hero_banner.jpg" alt="LTI Technology Workspace">
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY ACHIEVEMENT BANNER -->
+<section class="container">
+  <div class="achievement-banner">
+    <div>
+      <div class="achievement-number">200+</div>
+      <div style="font-size: 1.2rem; font-weight: 700; color: var(--text-white);">Full Stack Interns Successfully Trained</div>
+      <div style="color: var(--text-grey); font-size: 0.95rem;">Empowering the next generation of software developers and technological innovators with hands-on web application engineering skills.</div>
+    </div>
+    <a href="/courses/fullstack-web-development" class="btn btn-gold" style="white-space: nowrap;">View Full Stack Course</a>
+  </div>
+</section>
+
+<!-- ABOUT BRIEF -->
+<section class="section" style="background: var(--dark-charcoal);">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">ABOUT LTI TECHNOLOGY</div>
+      <h2>DON'T JUST USE TECHNOLOGY. <span class="text-gold">BUILD IT.</span></h2>
+      <p>At <strong>LTI (Learn, Think & Innovate)</strong>, we focus on hands-on practical technology education. We encourage students to gain deep technical knowledge, foster creative problem-solving, and construct real-world projects across hardware and software domains.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">🧠</div>
+        <h3 class="card-title text-gold">1. LEARN</h3>
+        <p class="card-text">Acquire fundamental and advanced technical knowledge through structured level progression and interactive mentorship.</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">💡</div>
+        <h3 class="card-title text-gold">2. THINK</h3>
+        <p class="card-text">Develop analytical problem-solving skills, architectural logic, user-centric thinking, and circuit design principles.</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">🚀</div>
+        <h3 class="card-title text-gold">3. INNOVATE</h3>
+        <p class="card-text">Transform concepts into reality by constructing physical robotics rovers, full-stack web platforms, and AI design portfolios.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">OUR PRACTICAL COURSES</div>
+      <h2>MASTER FUTURE-READY <span class="text-gold">DOMAINS</span></h2>
+      <p>Choose from our specialized programs designed for school students, college undergraduates, and passionate technology enthusiasts.</p>
+    </div>
+
+    <div class="cards-grid">
+      <!-- Course 1: Robotics -->
+      <div class="card">
+        <img src="/images/robotics_course.jpg" alt="Robotics Education" class="card-img-top">
+        <div class="badge" style="width: fit-content; margin-bottom: 10px;">Hardware & Automation</div>
+        <h3 class="card-title">Robotics Education</h3>
+        <p class="card-text">3-level structured progression covering electronic circuits, sensors, breadboards, digital logic, microcontrollers, Arduino, and embedded C/C++ programming.</p>
+        <a href="/courses/robotics-education" class="btn btn-outline btn-sm">Explore Robotics Levels →</a>
+      </div>
+
+      <!-- Course 2: Full Stack -->
+      <div class="card" style="border-color: var(--border-color);">
+        <img src="/images/fullstack_course.jpg" alt="Full Stack Web Development" class="card-img-top">
+        <div class="badge text-gold" style="width: fit-content; margin-bottom: 10px; background: rgba(255,201,40,0.2);">200+ Interns Trained</div>
+        <h3 class="card-title">Full Stack Web Development</h3>
+        <p class="card-text">Comprehensive hands-on coding from HTML5, CSS3, JavaScript, Node.js, Express, MongoDB Atlas, REST APIs, Git/GitHub, to complete web application deployment.</p>
+        <a href="/courses/fullstack-web-development" class="btn btn-gold btn-sm">Explore Full Stack Program →</a>
+      </div>
+
+      <!-- Course 3: UI/UX with AI -->
+      <div class="card">
+        <img src="/images/hero_banner.jpg" alt="UI/UX Design with AI" class="card-img-top">
+        <div class="badge" style="width: fit-content; margin-bottom: 10px;">1 Month Intensive</div>
+        <h3 class="card-title">UI/UX Design with AI</h3>
+        <p class="card-text">"Turn your creativity into digital experiences." Master Miro, Figma, Framer, and Behance combined with AI-assisted wireframing, layout systems, and portfolio creation.</p>
+        <a href="/courses/ui-ux-design-with-ai" class="btn btn-outline btn-sm">Explore UI/UX Program →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERNAL PROJECTS SHOWCASE -->
+<% if (typeof featuredProjects !== 'undefined' && featuredProjects.length > 0) { %>
+<section class="section" style="background: var(--dark-charcoal);">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">INTERNAL RESEARCH & DEVELOPMENT</div>
+      <h2>COMPANY <span class="text-gold">PROJECT SHOWCASE</span></h2>
+      <p>Explore real engineering and software solutions developed by LTI research lab and mentors.</p>
+    </div>
+
+    <div class="cards-grid">
+      <% featuredProjects.forEach(project => { %>
+        <div class="card">
+          <img src="<%= project.image %>" alt="<%= project.title %>" class="card-img-top">
+          <div class="badge" style="width: fit-content; margin-bottom: 10px;"><%= project.category %></div>
+          <h3 class="card-title"><%= project.title %></h3>
+          <p class="card-text"><%= project.description %></p>
+          <div style="margin-bottom: 15px;">
+            <% project.technologies.slice(0,4).forEach(tech => { %>
+              <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; margin-right: 4px; color: var(--text-grey);"><%= tech %></span>
+            <% }) %>
+          </div>
+          <a href="/projects/<%= project._id %>" class="btn btn-outline btn-sm">View Project Details →</a>
+        </div>
+      <% }) %>
+    </div>
+    <div class="text-center" style="margin-top: 40px;">
+      <a href="/projects" class="btn btn-gold">Explore All Company Projects</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- TESTIMONIALS -->
+<% if (typeof testimonials !== 'undefined' && testimonials.length > 0) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">STUDENT TESTIMONIALS</div>
+      <h2>WHAT OUR <span class="text-gold">STUDENTS SAY</span></h2>
+    </div>
+
+    <div class="cards-grid">
+      <% testimonials.forEach(t => { %>
+        <div class="card" style="position: relative;">
+          <div style="color: var(--golden-yellow); font-size: 1.2rem; margin-bottom: 10px;">★★★★★</div>
+          <p class="card-text" style="font-style: italic;">"<%= t.content %>"</p>
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 15px;">
+            <img src="<%= t.avatar %>" alt="<%= t.studentName %>" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-color);">
+            <div>
+              <div style="font-weight: 700; color: var(--text-white); font-size: 0.95rem;"><%= t.studentName %></div>
+              <div style="font-size: 0.8rem; color: var(--golden-yellow);"><%= t.role %></div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/footer') %>

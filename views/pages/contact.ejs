@@ -1,0 +1,127 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section py-12">
+  <div class="container mx-auto px-4">
+    <div class="section-header">
+      <div class="badge">CONTACT & LOCATION</div>
+      <h2>GET IN TOUCH WITH <span class="text-gold">LTI TEAM</span></h2>
+      <p>Visit our technology lab in Chennai or send us an inquiry directly below.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      
+      <!-- CONTACT DETAILS CARD -->
+      <div class="bg-darkCharcoal border border-yellow-500/20 rounded-2xl p-8">
+        <h3 class="text-2xl font-bold text-goldenYellow mb-6">COMPANY CONTACT INFORMATION</h3>
+
+        <div class="flex gap-4 mb-6">
+          <div class="text-3xl text-goldenYellow">📍</div>
+          <div>
+            <h4 class="text-lg font-semibold text-white">Official Address</h4>
+            <p class="text-textGrey text-sm mt-1">
+              <%= companyAddress %><br>
+              <strong class="text-goldenYellow">Landmark: <%= landmark %></strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 mb-6">
+          <div class="text-3xl text-goldenYellow">📞</div>
+          <div>
+            <h4 class="text-lg font-semibold text-white">Phone Contact</h4>
+            <p class="mt-2">
+              <a href="tel:<%= companyPhone %>" class="btn btn-gold btn-sm">
+                📞 Call +91 <%= companyPhone %>
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 mb-6">
+          <div class="text-3xl text-goldenYellow">✉️</div>
+          <div>
+            <h4 class="text-lg font-semibold text-white">Email Address</h4>
+            <p class="mt-2">
+              <a href="mailto:<%= companyEmail %>" class="btn btn-outline btn-sm">
+                ✉️ Send Email to <%= companyEmail %>
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="text-3xl text-goldenYellow">📢</div>
+          <div>
+            <h4 class="text-lg font-semibold text-white">Official WhatsApp Channel</h4>
+            <p class="mt-2">
+              <a href="https://whatsapp.com/channel/0029Vb8HL0T4dTnBl8HyO02E" target="_blank" class="btn btn-gold btn-sm bg-green-600 hover:bg-green-500 text-white border-none flex items-center gap-2">
+                💬 Join LTI Official WhatsApp Channel →
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT FORM -->
+      <div class="bg-darkCharcoal border border-yellow-500/20 rounded-2xl p-8">
+        <h3 class="text-2xl font-bold text-goldenYellow mb-6">SEND US A MESSAGE</h3>
+
+        <form action="/contact" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="name">Your Name <span class="text-gold">*</span></label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contactEmail">Email Address <span class="text-gold">*</span></label>
+            <input type="email" id="contactEmail" name="email" class="form-control" placeholder="example@domain.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Your mobile number">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-control" placeholder="Course inquiry, partnership, general question">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contactMessage">Message <span class="text-gold">*</span></label>
+            <textarea id="contactMessage" name="message" class="form-control" placeholder="Type your message here..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-gold w-full py-3">Send Inquiry Message →</button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- GOOGLE MAPS EMBED -->
+    <div class="bg-darkCharcoal border border-yellow-500/20 rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+        <h3 class="text-xl font-bold text-goldenYellow">VERIFIED LOCATION MAP – CHENNAI HQ</h3>
+        <a href="https://maps.google.com/?q=Ethiraj+Swamy+Salai+Erukancheri+Chennai+600118" target="_blank" class="btn btn-gold btn-sm">
+          🗺️ Get Directions on Google Maps
+        </a>
+      </div>
+      <div class="w-full h-96 rounded-xl overflow-hidden border border-gray-800">
+        <iframe 
+          title="LTI Location Map"
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          loading="lazy" 
+          allowfullscreen 
+          src="https://maps.google.com/maps?q=3B%20Ethiraj%20Swamy%20Salai,%20Erukancheri,%20Chennai%20600118&t=&z=15&ie=UTF8&iwloc=&output=embed">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section" style="padding-top: 60px;">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">INTERNAL COMPANY PROJECTS</div>
+      <h2>LTI RESEARCH & <span class="text-gold">DEVELOPMENT SHOWCASE</span></h2>
+      <p>Explore internal engineering initiatives, software portals, and robotics prototypes developed by LTI research team.</p>
+    </div>
+
+    <!-- CATEGORY FILTER TABS -->
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+      <% categories.forEach(cat => { %>
+        <a href="/projects?category=<%= encodeURIComponent(cat) %>" class="btn <%= selectedCategory === cat ? 'btn-gold' : 'btn-outline' %> btn-sm">
+          <%= cat %>
+        </a>
+      <% }) %>
+    </div>
+
+    <!-- PROJECTS GRID -->
+    <% if (projects.length === 0) { %>
+      <div class="text-center" style="padding: 60px 0; color: var(--text-grey);">
+        <h3>No published projects found in "<%= selectedCategory %>"</h3>
+        <p>Check back soon as new internal projects are published.</p>
+      </div>
+    <% } else { %>
+      <div class="cards-grid">
+        <% projects.forEach(p => { %>
+          <div class="card">
+            <img src="<%= p.image %>" alt="<%= p.title %>" class="card-img-top">
+            <div class="badge" style="width: fit-content; margin-bottom: 12px;"><%= p.category %></div>
+            <h3 class="card-title"><%= p.title %></h3>
+            <p class="card-text"><%= p.description %></p>
+            <div style="margin-bottom: 18px;">
+              <% p.technologies.forEach(tech => { %>
+                <span style="font-size: 0.75rem; background: rgba(255,201,40,0.1); border: 1px solid var(--border-color); padding: 3px 8px; border-radius: 4px; margin-right: 4px; color: var(--golden-yellow);"><%= tech %></span>
+              <% }) %>
+            </div>
+            <a href="/projects/<%= p._id %>" class="btn btn-outline btn-sm" style="margin-top: auto;">View Project Showcase →</a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

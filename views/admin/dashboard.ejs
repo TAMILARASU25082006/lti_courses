@@ -1,0 +1,99 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div style="font-weight: 700; color: var(--golden-yellow); font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase;">ADMIN CONTROL CENTER</div>
+    <ul class="admin-menu">
+      <li class="admin-menu-item"><a href="/admin" class="admin-menu-link active">📊 Dashboard Overview</a></li>
+      <li class="admin-menu-item"><a href="/admin/registrations" class="admin-menu-link">📑 Course Registrations</a></li>
+      <li class="admin-menu-item"><a href="/admin/projects" class="admin-menu-link">🛠️ Internal Projects</a></li>
+      <li class="admin-menu-item"><a href="/admin/messages" class="admin-menu-link">💬 Contact Messages</a></li>
+    </ul>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h2>ADMINISTRATION <span class="text-gold">OVERVIEW</span></h2>
+        <p style="color: var(--text-grey);">Manage registrations, student profiles, and internal LTI projects.</p>
+      </div>
+    </div>
+
+    <!-- STATS METRIC CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number"><%= totalRegistrations %></div>
+        <div class="stat-label">Total Registrations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color: #fbbf24;"><%= pendingRegistrations %></div>
+        <div class="stat-label">Pending Approval</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color: #4ade80;"><%= approvedRegistrations %></div>
+        <div class="stat-label">Approved Enrollments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number"><%= totalStudents %></div>
+        <div class="stat-label">Student Accounts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number"><%= totalProjects %></div>
+        <div class="stat-label">Internal Projects</div>
+      </div>
+    </div>
+
+    <!-- RECENT REGISTRATIONS TABLE -->
+    <div style="background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 1.3rem; color: var(--text-white);">Recent Course Registrations</h3>
+        <a href="/admin/registrations" class="btn btn-outline btn-sm">View All Registrations →</a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Course</th>
+              <th>Mobile</th>
+              <th>Institution</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (recentRegistrations.length === 0) { %>
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-grey);">No registrations logged yet.</td>
+              </tr>
+            <% } else { %>
+              <% recentRegistrations.forEach(r => { %>
+                <tr>
+                  <td><strong><%= r.fullName %></strong><br><small style="color: var(--text-grey);"><%= r.email %></small></td>
+                  <td><%= r.selectedCourse %></td>
+                  <td><%= r.mobile %></td>
+                  <td><%= r.schoolCollege %></td>
+                  <td>
+                    <% if (r.status === 'pending') { %>
+                      <span class="badge-status badge-pending">PENDING</span>
+                    <% } else if (r.status === 'approved') { %>
+                      <span class="badge-status badge-approved">APPROVED</span>
+                    <% } else { %>
+                      <span class="badge-status badge-rejected">REJECTED</span>
+                    <% } %>
+                  </td>
+                  <td><%= new Date(r.createdAt).toLocaleDateString() %></td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

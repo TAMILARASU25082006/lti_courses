@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section" style="padding-top: 60px;">
+  <div class="container" style="max-width: 900px;">
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+      <a href="/projects" class="text-gold" style="font-size: 0.9rem; font-weight: 600;">← Back to All Projects</a>
+
+      <div class="badge" style="margin-top: 16px; margin-bottom: 12px;"><%= project.category %></div>
+      <h1 style="font-size: 2.5rem; margin-bottom: 16px;"><%= project.title %></h1>
+      
+      <p style="color: var(--text-grey); font-size: 1.1rem; margin-bottom: 24px;"><%= project.description %></p>
+
+      <div class="hero-image-wrapper" style="margin-bottom: 30px;">
+        <img src="<%= project.image %>" alt="<%= project.title %>" style="width: 100%; max-height: 400px; object-fit: cover;">
+      </div>
+
+      <div style="margin-bottom: 30px;">
+        <h4 style="color: var(--golden-yellow); font-size: 1.1rem; margin-bottom: 10px;">Technologies Used:</h4>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <% project.technologies.forEach(tech => { %>
+            <span style="font-size: 0.85rem; background: rgba(255,201,40,0.15); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 20px; color: var(--golden-yellow); font-weight: 600;"><%= tech %></span>
+          <% }) %>
+        </div>
+      </div>
+
+      <% if (project.detailedContent) { %>
+        <div style="background: var(--primary-black); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <h4 style="color: var(--text-white); font-size: 1.2rem; margin-bottom: 12px;">Detailed Project Overview:</h4>
+          <div style="color: var(--text-grey); line-height: 1.7; white-space: pre-line;"><%= project.detailedContent %></div>
+        </div>
+      <% } %>
+
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

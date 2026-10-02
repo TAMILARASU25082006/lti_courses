@@ -1,0 +1,64 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section" style="padding-top: 60px;">
+  <div class="container">
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+      <div class="badge" style="margin-bottom: 12px;"><%= course.category.toUpperCase() %></div>
+      <h1 style="font-size: 2.8rem; margin-bottom: 10px;"><%= course.title %></h1>
+      <p style="color: var(--golden-yellow); font-size: 1.2rem; font-weight: 600; margin-bottom: 24px;"><%= course.subtitle %></p>
+      
+      <p style="color: var(--text-grey); font-size: 1.1rem; margin-bottom: 30px;"><%= course.description %></p>
+
+      <div class="hero-image-wrapper" style="margin-bottom: 40px; max-height: 350px;">
+        <img src="<%= course.image %>" alt="<%= course.title %>" style="width: 100%; height: 350px; object-fit: cover;">
+      </div>
+
+      <% if (course.levels && course.levels.length > 0) { %>
+        <h3 style="color: var(--golden-yellow); font-size: 1.5rem; margin-bottom: 20px;">ROBOTICS LEVEL PROGRESSION:</h3>
+        <div class="level-progression" style="margin-bottom: 40px;">
+          <% course.levels.forEach(lvl => { %>
+            <div class="level-card">
+              <div class="level-badge">LEVEL <%= lvl.levelNumber %></div>
+              <h4 class="level-title"><%= lvl.title %></h4>
+              <div class="level-eligibility"><%= lvl.eligibility %></div>
+              <p style="font-size: 0.88rem; color: var(--text-grey); margin-bottom: 12px;"><%= lvl.description %></p>
+              <ul class="topic-list">
+                <% lvl.topics.forEach(t => { %>
+                  <li><%= t %></li>
+                <% }) %>
+              </ul>
+              <a href="/register?course=<%= encodeURIComponent(course.title) %>&level=<%= encodeURIComponent(lvl.title) %>" class="btn btn-gold btn-sm" style="width: 100%; margin-top: 15px;">Register <%= lvl.title %></a>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;">
+        <div>
+          <h3 style="color: var(--golden-yellow); font-size: 1.3rem; margin-bottom: 14px;">Topics Covered</h3>
+          <ul class="topic-list" style="columns: 2;">
+            <% course.topics.forEach(t => { %>
+              <li><%= t %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: var(--golden-yellow); font-size: 1.3rem; margin-bottom: 14px;">Course Highlights</h3>
+          <ul class="topic-list">
+            <% course.highlights.forEach(h => { %>
+              <li><%= h %></li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center" style="margin-top: 30px;">
+        <a href="/register?course=<%= encodeURIComponent(course.title) %>" class="btn btn-gold btn-lg">Register for <%= course.title %> Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

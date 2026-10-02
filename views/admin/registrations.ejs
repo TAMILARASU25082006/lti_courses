@@ -1,0 +1,127 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div style="font-weight: 700; color: var(--golden-yellow); font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase;">ADMIN CONTROL CENTER</div>
+    <ul class="admin-menu">
+      <li class="admin-menu-item"><a href="/admin" class="admin-menu-link">📊 Dashboard Overview</a></li>
+      <li class="admin-menu-item"><a href="/admin/registrations" class="admin-menu-link active">📑 Course Registrations</a></li>
+      <li class="admin-menu-item"><a href="/admin/projects" class="admin-menu-link">🛠️ Internal Projects</a></li>
+      <li class="admin-menu-item"><a href="/admin/messages" class="admin-menu-link">💬 Contact Messages</a></li>
+    </ul>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h2>COURSE REGISTRATIONS <span class="text-gold">MANAGEMENT</span></h2>
+        <p style="color: var(--text-grey);">Search, filter, approve, or reject student course registrations.</p>
+      </div>
+    </div>
+
+    <!-- SEARCH & FILTERS FORM -->
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-subtle); padding: 20px; border-radius: var(--radius-md); margin-bottom: 30px;">
+      <form action="/admin/registrations" method="GET" style="display: flex; gap: 16px; flex-wrap: wrap;">
+        
+        <div style="flex-grow: 1; min-width: 200px;">
+          <input type="text" name="search" class="form-control" placeholder="Search by student name, email, phone..." value="<%= searchQuery %>">
+        </div>
+
+        <div style="width: 220px;">
+          <select name="course" class="form-control">
+            <option value="All">-- Filter by Course --</option>
+            <option value="Robotics Education" <%= selectedCourse === 'Robotics Education' ? 'selected' : '' %>>Robotics Education</option>
+            <option value="Full Stack Web Development" <%= selectedCourse === 'Full Stack Web Development' ? 'selected' : '' %>>Full Stack Web Development</option>
+            <option value="UI/UX Design with AI" <%= selectedCourse === 'UI/UX Design with AI' ? 'selected' : '' %>>UI/UX Design with AI</option>
+          </select>
+        </div>
+
+        <div style="width: 180px;">
+          <select name="status" class="form-control">
+            <option value="All">-- Filter Status --</option>
+            <option value="pending" <%= selectedStatus === 'pending' ? 'selected' : '' %>>Pending</option>
+            <option value="approved" <%= selectedStatus === 'approved' ? 'selected' : '' %>>Approved</option>
+            <option value="rejected" <%= selectedStatus === 'rejected' ? 'selected' : '' %>>Rejected</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-sm">Filter Registrations</button>
+      </form>
+    </div>
+
+    <!-- REGISTRATIONS DATA TABLE -->
+    <div class="table-responsive">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Ref ID / Date</th>
+            <th>Student Name & Contact</th>
+            <th>Institution & Qualification</th>
+            <th>Selected Course & Level</th>
+            <th>Mode</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (registrations.length === 0) { %>
+            <tr>
+              <td colspan="7" style="text-align: center; color: var(--text-grey); padding: 30px;">No registrations match the selected filter criteria.</td>
+            </tr>
+          <% } else { %>
+            <% registrations.forEach(reg => { %>
+              <tr>
+                <td>
+                  <strong style="color: var(--golden-yellow);">LTI-REG-<%= reg._id.toString().substring(18) %></strong><br>
+                  <small style="color: var(--text-grey);"><%= new Date(reg.createdAt).toLocaleDateString() %></small>
+                </td>
+                <td>
+                  <strong><%= reg.fullName %></strong><br>
+                  <small style="color: var(--text-grey);"><%= reg.email %></small><br>
+                  <small style="color: var(--text-grey);">📞 <%= reg.mobile %></small>
+                </td>
+                <td>
+                  <%= reg.schoolCollege %><br>
+                  <small style="color: var(--text-grey);"><%= reg.qualification %></small>
+                </td>
+                <td>
+                  <strong><%= reg.selectedCourse %></strong><br>
+                  <% if (reg.roboticsLevel && reg.roboticsLevel !== 'N/A') { %>
+                    <small style="color: var(--golden-yellow);"><%= reg.roboticsLevel %></small>
+                  <% } %>
+                </td>
+                <td><span class="badge" style="font-size: 0.75rem;"><%= reg.preferredMode %></span></td>
+                <td>
+                  <% if (reg.status === 'pending') { %>
+                    <span class="badge-status badge-pending">PENDING</span>
+                  <% } else if (reg.status === 'approved') { %>
+                    <span class="badge-status badge-approved">APPROVED</span>
+                  <% } else { %>
+                    <span class="badge-status badge-rejected">REJECTED</span>
+                  <% } %>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 6px;">
+                    <form action="/admin/registrations/<%= reg._id %>/status" method="POST" style="display: inline;">
+                      <input type="hidden" name="status" value="approved">
+                      <button type="submit" class="btn btn-gold btn-sm" style="padding: 4px 8px; font-size: 0.75rem;" title="Approve Registration">✔ Approve</button>
+                    </form>
+                    <form action="/admin/registrations/<%= reg._id %>/status" method="POST" style="display: inline;">
+                      <input type="hidden" name="status" value="rejected">
+                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 4px 8px; font-size: 0.75rem; border-color: #ef4444; color: #ef4444;" title="Reject Registration">✖ Reject</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,107 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- PROFILE CARD & AVATAR UPLOAD -->
+      <div class="bg-darkCharcoal border border-yellow-500/20 rounded-2xl p-8 h-fit">
+        <div class="text-center mb-6">
+          <img src="<%= user.profileImage %>" alt="<%= user.fullName %>" class="w-28 h-28 rounded-full object-cover border-4 border-goldenYellow shadow-lg mx-auto mb-3">
+          <h3 class="text-xl font-bold text-white"><%= user.fullName %></h3>
+          <div class="badge mt-2"><%= user.role.toUpperCase() %></div>
+        </div>
+
+        <!-- PROFILE UPDATE FORM -->
+        <form action="/profile/update" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label class="form-label">Profile Image Upload</label>
+            <input type="file" name="profileImage" class="form-control" accept="image/*">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profileName">Full Name</label>
+            <input type="text" id="profileName" name="fullName" class="form-control" value="<%= user.fullName %>" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address (Read-only)</label>
+            <input type="email" class="form-control bg-gray-800 text-gray-400 cursor-not-allowed" value="<%= user.email %>" readonly>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profileMobile">Mobile Number</label>
+            <input type="tel" id="profileMobile" name="mobile" class="form-control" value="<%= user.mobile || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profileSchool">School / College</label>
+            <input type="text" id="profileSchool" name="schoolCollege" class="form-control" value="<%= user.schoolCollege || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profileQualification">Qualification / Standard</label>
+            <input type="text" id="profileQualification" name="qualification" class="form-control" value="<%= user.qualification || '' %>">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="profileBio">Bio / About Me</label>
+            <textarea id="profileBio" name="bio" class="form-control" placeholder="Tell us about your learning goals..."><%= user.bio || '' %></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-gold w-full mt-2">Save Profile Changes</button>
+        </form>
+      </div>
+
+      <!-- REGISTERED COURSES & APPLICATION STATUS -->
+      <div class="lg:col-span-2">
+        <div class="bg-darkCharcoal border border-yellow-500/20 rounded-2xl p-8 mb-8">
+          <h3 class="text-2xl font-bold text-goldenYellow mb-6">MY REGISTERED COURSES & STATUS</h3>
+
+          <% if (registrations.length === 0) { %>
+            <div class="text-center py-10 text-textGrey">
+              <div class="text-5xl mb-3">📚</div>
+              <h4 class="text-lg font-semibold text-white">No Course Registrations Yet</h4>
+              <p class="text-sm mt-1 mb-4">You haven't registered for any LTI technology courses yet.</p>
+              <a href="/courses" class="btn btn-gold">Browse & Register Courses →</a>
+            </div>
+          <% } else { %>
+            <div class="flex flex-col gap-4">
+              <% registrations.forEach(reg => { %>
+                <div class="bg-primaryBlack border border-gray-800 p-6 rounded-xl">
+                  <div class="flex flex-wrap justify-between items-start gap-2 mb-3">
+                    <div>
+                      <h4 class="text-xl font-bold text-white"><%= reg.selectedCourse %></h4>
+                      <% if (reg.roboticsLevel && reg.roboticsLevel !== 'N/A') { %>
+                        <div class="text-goldenYellow font-semibold text-sm mt-1"><%= reg.roboticsLevel %></div>
+                      <% } %>
+                    </div>
+                    <% if (reg.status === 'pending') { %>
+                      <span class="badge-status badge-pending">STATUS: PENDING APPROVAL</span>
+                    <% } else if (reg.status === 'approved') { %>
+                      <span class="badge-status badge-approved">STATUS: APPROVED & ENROLLED</span>
+                    <% } else { %>
+                      <span class="badge-status badge-rejected">STATUS: REJECTED</span>
+                    <% } %>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-textGrey border-t border-gray-800 pt-3 mt-2">
+                    <div><strong>Registered On:</strong> <%= new Date(reg.createdAt).toLocaleDateString() %></div>
+                    <div><strong>Learning Mode:</strong> <%= reg.preferredMode %></div>
+                    <div><strong>Reference ID:</strong> LTI-REG-<%= reg._id.toString().substring(18) %></div>
+                    <div><strong>Mobile:</strong> <%= reg.mobile %></div>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

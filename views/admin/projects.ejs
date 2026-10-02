@@ -1,0 +1,125 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div style="font-weight: 700; color: var(--golden-yellow); font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase;">ADMIN CONTROL CENTER</div>
+    <ul class="admin-menu">
+      <li class="admin-menu-item"><a href="/admin" class="admin-menu-link">📊 Dashboard Overview</a></li>
+      <li class="admin-menu-item"><a href="/admin/registrations" class="admin-menu-link">📑 Course Registrations</a></li>
+      <li class="admin-menu-item"><a href="/admin/projects" class="admin-menu-link active">🛠️ Internal Projects</a></li>
+      <li class="admin-menu-item"><a href="/admin/messages" class="admin-menu-link">💬 Contact Messages</a></li>
+    </ul>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h2>INTERNAL LTI <span class="text-gold">PROJECTS MANAGEMENT</span></h2>
+        <p style="color: var(--text-grey);">Manage internal company projects. Toggle published status to control public showcase visibility.</p>
+      </div>
+    </div>
+
+    <!-- CREATE PROJECT FORM -->
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 30px; margin-bottom: 40px;">
+      <h3 style="color: var(--golden-yellow); font-size: 1.3rem; margin-bottom: 20px;">+ CREATE NEW INTERNAL COMPANY PROJECT</h3>
+
+      <form action="/admin/projects/create" method="POST" enctype="multipart/form-data">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          
+          <div class="form-group">
+            <label class="form-label" for="projectTitle">Project Title <span class="text-gold">*</span></label>
+            <input type="text" id="projectTitle" name="title" class="form-control" placeholder="e.g. Autonomous Mobile Robotics Rover" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="projectCategory">Project Category <span class="text-gold">*</span></label>
+            <select id="projectCategory" name="category" class="form-control" required>
+              <option value="Robotics Projects">Robotics Projects</option>
+              <option value="Full Stack Projects">Full Stack Projects</option>
+              <option value="UI/UX Projects">UI/UX Projects</option>
+              <option value="Research & Development">Research & Development</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="projectDesc">Short Description <span class="text-gold">*</span></label>
+          <input type="text" id="projectDesc" name="description" class="form-control" placeholder="Brief summary of the internal project..." required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="detailedContent">Detailed Content / Technical Specification</label>
+          <textarea id="detailedContent" name="detailedContent" class="form-control" placeholder="In-depth technical architecture, hardware specifications, software modules..."></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label class="form-label" for="technologies">Technologies Used (Comma-separated)</label>
+            <input type="text" id="technologies" name="technologies" class="form-control" placeholder="e.g. Arduino, C++, Node.js, Express, MongoDB">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="projectImage">Project Image Upload</label>
+            <input type="file" id="projectImage" name="projectImage" class="form-control" accept="image/*">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 30px; align-items: center; margin-bottom: 20px;">
+          <div>
+            <label class="form-label">Publish Status</label>
+            <select name="status" class="form-control" style="width: 160px;">
+              <option value="published">Published</option>
+              <option value="unpublished">Unpublished</option>
+            </select>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <label style="color: var(--text-white); cursor: pointer;"><input type="checkbox" name="featured"> Feature on Homepage</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-gold">Create Internal Project →</button>
+      </form>
+    </div>
+
+    <!-- EXISTING PROJECTS LIST -->
+    <h3 style="font-size: 1.4rem; color: var(--text-white); margin-bottom: 20px;">Existing Internal Projects (<%= projects.length %>)</h3>
+
+    <div class="cards-grid">
+      <% projects.forEach(p => { %>
+        <div class="card" style="<%= p.status === 'unpublished' ? 'opacity: 0.6;' : '' %>">
+          <img src="<%= p.image %>" alt="<%= p.title %>" class="card-img-top">
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span class="badge"><%= p.category %></span>
+            <% if (p.status === 'published') { %>
+              <span class="badge-status badge-approved">PUBLISHED</span>
+            <% } else { %>
+              <span class="badge-status badge-rejected">UNPUBLISHED</span>
+            <% } %>
+          </div>
+
+          <h4 class="card-title"><%= p.title %></h4>
+          <p class="card-text"><%= p.description %></p>
+
+          <div style="display: flex; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border-subtle);">
+            <form action="/admin/projects/<%= p._id %>/toggle" method="POST" style="flex-grow: 1;">
+              <button type="submit" class="btn btn-outline btn-sm" style="width: 100%;">
+                <%= p.status === 'published' ? 'Unpublish' : 'Publish' %>
+              </button>
+            </form>
+            <form action="/admin/projects/<%= p._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this project?');">
+              <button type="submit" class="btn btn-outline btn-sm" style="border-color: #ef4444; color: #ef4444;">Delete</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

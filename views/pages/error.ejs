@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="section" style="padding-top: 80px;">
+  <div class="container text-center" style="max-width: 600px;">
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 50px;">
+      <div style="font-size: 4rem; color: var(--warning-color); margin-bottom: 10px;">⚠️</div>
+      <h2 style="font-size: 2rem; color: var(--text-white); margin-bottom: 14px;">SOMETHING WENT WRONG</h2>
+      <p style="color: var(--text-grey); font-size: 1.05rem; margin-bottom: 30px;"><%= typeof message !== 'undefined' ? message : 'An unexpected application error occurred.' %></p>
+      <a href="/" class="btn btn-gold">Back to Homepage →</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,14 @@
+<div class="container" style="margin-top: 20px;">
+  <% if (typeof successMsg !== 'undefined' && successMsg) { %>
+    <div class="alert alert-success">
+      <span>✔</span>
+      <div><%= successMsg %></div>
+    </div>
+  <% } %>
+  <% if (typeof errorMsg !== 'undefined' && errorMsg) { %>
+    <div class="alert alert-error">
+      <span>⚠️</span>
+      <div><%= errorMsg %></div>
+    </div>
+  <% } %>
+</div>

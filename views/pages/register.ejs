@@ -1,0 +1,110 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<section class="section" style="padding-top: 60px;">
+  <div class="container" style="max-width: 900px;">
+    <div class="section-header">
+      <div class="badge">COURSE ENROLLMENT</div>
+      <h2>JOIN <span class="text-gold">LTI TECHNOLOGY</span></h2>
+      <p>Register directly through our official website or select Google Forms registration options below.</p>
+    </div>
+
+    <!-- REGISTRATION METHODS METHOD SWITCHER -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+      <div style="background: var(--dark-charcoal); border: 2px solid var(--golden-yellow); padding: 20px; border-radius: var(--radius-md); text-align: center;">
+        <div style="font-weight: 700; color: var(--golden-yellow); font-size: 1.1rem; margin-bottom: 4px;">METHOD 1: WEBSITE REGISTRATION</div>
+        <div style="font-size: 0.85rem; color: var(--text-grey);">Direct submission with real-time validation & student dashboard tracking</div>
+      </div>
+      <div style="background: var(--dark-charcoal); border: 1px dashed var(--border-color); padding: 20px; border-radius: var(--radius-md); text-align: center;">
+        <div style="font-weight: 700; color: var(--text-white); font-size: 1.1rem; margin-bottom: 4px;">METHOD 2: GOOGLE FORMS</div>
+        <div style="font-size: 0.85rem; color: var(--text-grey);">External Google Forms integration option</div>
+        <button type="button" class="btn btn-outline btn-sm" style="margin-top: 10px;" onclick="alert('Google Forms URL integration is currently pending configuration. Please complete your registration via Method 1 (Direct Website Registration).');">
+          Google Forms Link (Pending URL)
+        </button>
+      </div>
+    </div>
+
+    <!-- REGISTRATION FORM -->
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+      <h3 style="font-size: 1.5rem; color: var(--golden-yellow); margin-bottom: 24px;">DIRECT WEBSITE REGISTRATION FORM</h3>
+
+      <form action="/register" method="POST">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          
+          <!-- Full Name -->
+          <div class="form-group">
+            <label class="form-label" for="fullName">Full Name <span class="text-gold">*</span></label>
+            <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Enter your full name" value="<%= typeof formData !== 'undefined' ? formData.fullName : '' %>" required>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address <span class="text-gold">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="example@domain.com" value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" required>
+          </div>
+
+          <!-- Mobile -->
+          <div class="form-group">
+            <label class="form-label" for="mobile">Mobile Number (10 Digits) <span class="text-gold">*</span></label>
+            <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="8610621246" pattern="[0-9]{10}" value="<%= typeof formData !== 'undefined' ? formData.mobile : '' %>" required>
+          </div>
+
+          <!-- School / College -->
+          <div class="form-group">
+            <label class="form-label" for="schoolCollege">School / College Name <span class="text-gold">*</span></label>
+            <input type="text" id="schoolCollege" name="schoolCollege" class="form-control" placeholder="Enter your school or college" value="<%= typeof formData !== 'undefined' ? formData.schoolCollege : '' %>" required>
+          </div>
+
+          <!-- Qualification / Standard -->
+          <div class="form-group">
+            <label class="form-label" for="qualification">Qualification / Standard <span class="text-gold">*</span></label>
+            <input type="text" id="qualification" name="qualification" class="form-control" placeholder="e.g. 8th Standard, B.E. CSE, Diploma" value="<%= typeof formData !== 'undefined' ? formData.qualification : '' %>" required>
+          </div>
+
+          <!-- Selected Course -->
+          <div class="form-group">
+            <label class="form-label" for="selectedCourse">Select Course <span class="text-gold">*</span></label>
+            <select id="selectedCourse" name="selectedCourse" class="form-control" required>
+              <option value="">-- Choose a Course --</option>
+              <option value="Robotics Education" <%= (selectedCourseQuery === 'Robotics Education' || (typeof formData !== 'undefined' && formData.selectedCourse === 'Robotics Education')) ? 'selected' : '' %>>Robotics Education</option>
+              <option value="Full Stack Web Development" <%= (selectedCourseQuery === 'Full Stack Web Development' || (typeof formData !== 'undefined' && formData.selectedCourse === 'Full Stack Web Development')) ? 'selected' : '' %>>Full Stack Web Development (200+ Interns Trained)</option>
+              <option value="UI/UX Design with AI" <%= (selectedCourseQuery === 'UI/UX Design with AI' || (typeof formData !== 'undefined' && formData.selectedCourse === 'UI/UX Design with AI')) ? 'selected' : '' %>>UI/UX Design with AI (1 Month Program)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Robotics Level (Conditional) -->
+        <div class="form-group" id="roboticsLevelGroup" style="display: none;">
+          <label class="form-label" for="roboticsLevel">Robotics Progression Level <span class="text-gold">*</span></label>
+          <select id="roboticsLevel" name="roboticsLevel" class="form-control">
+            <option value="Level 1 – SENSOR ROBOTICS" <%= selectedLevelQuery.includes('Level 1') ? 'selected' : '' %>>LEVEL 1 – SENSOR ROBOTICS (4th to 10th Standard)</option>
+            <option value="Level 2 – LOGIC & ROBOTICS" <%= selectedLevelQuery.includes('Level 2') ? 'selected' : '' %>>LEVEL 2 – LOGIC & ROBOTICS (5th Standard & Above)</option>
+            <option value="Level 3 – CODING & AUTOMATION" <%= selectedLevelQuery.includes('Level 3') ? 'selected' : '' %>>LEVEL 3 – CODING & AUTOMATION (Arduino C/C++)</option>
+          </select>
+        </div>
+
+        <!-- Preferred Learning Mode -->
+        <div class="form-group">
+          <label class="form-label">Preferred Learning Mode</label>
+          <div style="display: flex; gap: 20px; margin-top: 6px;">
+            <label style="color: var(--text-grey); cursor: pointer;"><input type="radio" name="preferredMode" value="Offline Classroom" checked> Offline Classroom (Chennai Lab)</label>
+            <label style="color: var(--text-grey); cursor: pointer;"><input type="radio" name="preferredMode" value="Online Live"> Online Live Sessions</label>
+            <label style="color: var(--text-grey); cursor: pointer;"><input type="radio" name="preferredMode" value="Hybrid"> Hybrid</label>
+          </div>
+        </div>
+
+        <!-- Additional Message -->
+        <div class="form-group">
+          <label class="form-label" for="message">Additional Message / Questions (Optional)</label>
+          <textarea id="message" name="message" class="form-control" placeholder="Any specific requirements or queries..."><%= typeof formData !== 'undefined' ? formData.message : '' %></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-lg" style="width: 100%; margin-top: 10px;">Submit Course Registration →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
