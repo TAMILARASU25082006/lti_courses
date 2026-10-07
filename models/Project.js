@@ -36,6 +36,26 @@ const projectSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  has3DModel: {
+    type: Boolean,
+    default: false
+  },
+  model3DType: {
+    type: String,
+    enum: ['line-follower', 'obstacle-avoiding', 'edge-avoiding', 'wall-object-following', 'wireless-rc-car', 'rover', 'arm', 'biped'],
+    default: 'line-follower'
+  },
+  studentAuthor: {
+    type: String,
+    default: ''
+  },
+  modelSpecs: {
+    chassis: { type: String, default: 'Custom Acrylic & Aluminum Matrix' },
+    microcontroller: { type: String, default: 'Arduino Uno R3 / ESP32' },
+    sensors: { type: String, default: 'HC-SR04 Ultrasonic Sonar & IR Array' },
+    motors: { type: String, default: '4x Dual Shaft TT Gear Motors with L298N Driver' },
+    power: { type: String, default: '11.1V 3S LiPo Battery Pack' }
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

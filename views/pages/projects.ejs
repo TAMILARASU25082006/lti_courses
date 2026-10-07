@@ -10,6 +10,20 @@
       <p>Explore internal engineering initiatives, software portals, and robotics prototypes developed by LTI research team.</p>
     </div>
 
+    <!-- 3D FEATURE ANNOUNCEMENT BANNER -->
+    <div style="background: linear-gradient(135deg, rgba(255,201,40,0.12), rgba(21,21,21,0.95)); border: 1px solid var(--golden-yellow); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 35px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font-size: 2rem;">🤖</span>
+        <div>
+          <div class="badge" style="background: var(--golden-yellow); color: #000; font-weight: 700;">STUDENT INNOVATION</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-white); margin-top: 2px;">Interactive 3D Robot Assembly Models</h3>
+        </div>
+      </div>
+      <button onclick="openRobot3dModal({ modelType: 'rover', title: 'Featured Student 3D Robot Rover' })" class="btn btn-gold btn-sm">
+        🧊 Test Drive 3D Viewer →
+      </button>
+    </div>
+
     <!-- CATEGORY FILTER TABS -->
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
       <% categories.forEach(cat => { %>
@@ -28,17 +42,34 @@
     <% } else { %>
       <div class="cards-grid">
         <% projects.forEach(p => { %>
-          <div class="card">
-            <img src="<%= p.image %>" alt="<%= p.title %>" class="card-img-top">
-            <div class="badge" style="width: fit-content; margin-bottom: 12px;"><%= p.category %></div>
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div style="position: relative;">
+              <img src="<%= p.image %>" alt="<%= p.title %>" class="card-img-top">
+              <% if (p.category === 'Robotics Projects' || p.has3DModel) { %>
+                <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.85); color: var(--golden-yellow); border: 1px solid var(--golden-yellow); font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(4px);">
+                  🧊 3D VIEW AVAILABLE
+                </span>
+              <% } %>
+            </div>
+
+            <div class="badge" style="width: fit-content; margin-top: 14px; margin-bottom: 12px;"><%= p.category %></div>
             <h3 class="card-title"><%= p.title %></h3>
             <p class="card-text"><%= p.description %></p>
+            
             <div style="margin-bottom: 18px;">
               <% p.technologies.forEach(tech => { %>
                 <span style="font-size: 0.75rem; background: rgba(255,201,40,0.1); border: 1px solid var(--border-color); padding: 3px 8px; border-radius: 4px; margin-right: 4px; color: var(--golden-yellow);"><%= tech %></span>
               <% }) %>
             </div>
-            <a href="/projects/<%= p._id %>" class="btn btn-outline btn-sm" style="margin-top: auto;">View Project Showcase →</a>
+
+            <div style="margin-top: auto; display: flex; gap: 8px; flex-wrap: wrap;">
+              <% if (p.category === 'Robotics Projects' || p.has3DModel) { %>
+                <button onclick="openRobot3dModal({ modelType: '<%= p.model3DType || 'rover' %>', title: '<%= p.title %>', specs: <%= JSON.stringify(p.modelSpecs || {}) %> })" class="btn btn-outline btn-sm" style="flex: 1; border-color: var(--golden-yellow); color: var(--golden-yellow);">
+                  🧊 3D View
+                </button>
+              <% } %>
+              <a href="/projects/<%= p._id %>" class="btn btn-gold btn-sm" style="flex: 1; text-align: center;">View Project →</a>
+            </div>
           </div>
         <% }) %>
       </div>
@@ -47,4 +78,5 @@
   </div>
 </section>
 
+<%- include('../partials/robot3dModal') %>
 <%- include('../partials/footer') %>

@@ -134,6 +134,61 @@
 </section>
 <% } %>
 
+<!-- 3D STUDENT ROBOT SHOWCASE FEATURE SECTION -->
+<section class="section" style="background: linear-gradient(180deg, var(--dark-charcoal) 0%, var(--primary-black) 100%); position: relative; overflow: hidden; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr; lg:grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+      <div>
+        <div class="badge" style="background: var(--golden-yellow); color: #000; font-weight: 700; margin-bottom: 12px;">NEW INNOVATION 🤖</div>
+        <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-white); margin-bottom: 16px;">
+          EXPLORE <span class="text-gold">3D ROBOT DESIGNS</span> CREATED BY OUR STUDENTS
+        </h2>
+        <p style="color: var(--text-grey); font-size: 1.05rem; line-height: 1.7; margin-bottom: 24px;">
+          Our robotics students don't just learn circuit logic—they design, program, and fabricate complete physical and 3D CAD robot prototypes! Rotate, zoom, and inspect explode-assembly views of rovers, robotic arms, and bipedal walkers built right in our labs.
+        </p>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;">
+          <button onclick="openRobot3dModal({ modelType: 'line-follower' })" class="btn btn-gold btn-sm">
+            ⚡ Line Follower
+          </button>
+          <button onclick="openRobot3dModal({ modelType: 'obstacle-avoiding' })" class="btn btn-outline btn-sm">
+            🚧 Obstacle Avoider
+          </button>
+          <button onclick="openRobot3dModal({ modelType: 'edge-avoiding' })" class="btn btn-outline btn-sm">
+            ⚠️ Edge Avoider
+          </button>
+          <button onclick="openRobot3dModal({ modelType: 'wall-object-following' })" class="btn btn-outline btn-sm">
+            🧱 Wall & Object Follower
+          </button>
+        </div>
+
+        <a href="/courses/robotics-education" class="btn btn-gold">Build Robots in Robotics Course →</a>
+      </div>
+
+      <!-- INLINE HOME 3D PREVIEW CANVAS CONTAINER -->
+      <div style="background: #0c0c0e; border: 1px solid rgba(255,201,40,0.3); border-radius: var(--radius-lg); overflow: hidden; position: relative; height: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+        <div id="home3dCanvas" style="width: 100%; height: 100%;"></div>
+        <div style="position: absolute; bottom: 12px; left: 12px; right: 12px; background: rgba(8,8,8,0.85); backdrop-filter: blur(8px); padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--golden-yellow); font-size: 0.85rem; font-weight: 600;">✨ Interactive 3D Robot CAD Preview (Drag to Rotate)</span>
+          <button onclick="openRobot3dModal({ modelType: 'line-follower' })" style="font-size: 0.75rem; color: #fff; text-decoration: underline; background: none; border: none; cursor: pointer;">
+            Fullscreen View ⛶
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/js/robot3dViewer.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    new Robot3DViewer('home3dCanvas', {
+      modelType: 'line-follower',
+      autoRotate: true
+    });
+  });
+</script>
+
 <!-- TESTIMONIALS -->
 <% if (typeof testimonials !== 'undefined' && testimonials.length > 0) { %>
 <section class="section">
@@ -162,4 +217,5 @@
 </section>
 <% } %>
 
+<%- include('../partials/robot3dModal') %>
 <%- include('../partials/footer') %>

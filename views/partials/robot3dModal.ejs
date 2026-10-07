@@ -1,0 +1,433 @@
+<!-- LTI INTERACTIVE 3D STUDENT ROBOT VIEWER MODAL -->
+<div id="robot3dModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300">
+  <div class="bg-darkCharcoal border border-goldenYellow/40 rounded-2xl w-full max-w-5xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
+    
+    <!-- MODAL HEADER -->
+    <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-primaryBlack/60">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🤖</span>
+        <div>
+          <div class="text-xs font-semibold tracking-wider text-goldenYellow uppercase">LTI Student Robotics Engineering Lab</div>
+          <h3 id="modalRobotTitle" class="text-xl font-bold text-white">Interactive 3D Robot CAD Inspector</h3>
+        </div>
+      </div>
+      <button id="closeRobot3dModalBtn" class="text-textGrey hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors" title="Close Modal">
+        ✕
+      </button>
+    </div>
+
+    <!-- MAIN VIEWER LAYOUT GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 flex-1 overflow-hidden">
+      
+      <!-- 3D CANVAS VIEWPORT (COLS 1 & 2) -->
+      <div class="lg:col-span-2 relative bg-primaryBlack min-h-[380px] lg:min-h-[500px] flex items-center justify-center overflow-hidden">
+        
+        <!-- CANVAS CONTAINER -->
+        <div id="modal3dCanvas" class="w-full h-full min-h-[380px] lg:min-h-[500px]"></div>
+
+        <!-- HOVER TOOLTIP OVERLAY -->
+        <div id="partInfoOverlay" class="absolute bottom-4 left-4 right-4 bg-primaryBlack/90 border border-goldenYellow/30 p-3 rounded-xl backdrop-blur-md transition-all hidden">
+          <div class="flex items-center gap-2 text-goldenYellow font-semibold text-sm">
+            <span>⚙️</span> <span id="hoverPartName">Part Name</span>
+          </div>
+          <div id="hoverPartDesc" class="text-xs text-textGrey mt-1">Part technical details...</div>
+        </div>
+
+        <!-- CANVAS FLOATING CONTROLS BAR -->
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
+          <button id="btnToggleWireframe" class="bg-primaryBlack/80 hover:bg-darkCharcoal border border-white/20 text-xs text-white px-3 py-1.5 rounded-lg backdrop-blur-md transition-colors flex items-center gap-1.5">
+            <span>🧊</span> Wireframe: <strong id="wireframeStateText">OFF</strong>
+          </button>
+          <button id="btnToggleAutoRotate" class="bg-primaryBlack/80 hover:bg-darkCharcoal border border-white/20 text-xs text-white px-3 py-1.5 rounded-lg backdrop-blur-md transition-colors flex items-center gap-1.5">
+            <span>🔄</span> Auto-Spin: <strong id="autoRotateStateText">ON</strong>
+          </button>
+          <button id="btnResetCam" class="bg-primaryBlack/80 hover:bg-darkCharcoal border border-white/20 text-xs text-white px-3 py-1.5 rounded-lg backdrop-blur-md transition-colors flex items-center gap-1.5">
+            <span>📷</span> Reset View
+          </button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR CONTROLS & SPECS (COL 3) -->
+      <div class="p-6 bg-darkCharcoal border-t lg:border-t-0 lg:border-l border-white/10 flex flex-col justify-between overflow-y-auto">
+        <div>
+          <!-- MODEL SELECTOR WITH ALL 15 ROBOT PRESETS -->
+          <div class="mb-4">
+            <label class="block text-xs font-bold text-textGrey uppercase tracking-wider mb-2">Select Student Robot Model (15 Presets):</label>
+            <select id="modalRobotTypeSelect" class="w-full bg-primaryBlack border border-white/20 text-white rounded-xl px-3 py-2 text-xs focus:border-goldenYellow focus:outline-none">
+              <optgroup label="LEVEL 1 — SENSOR ROBOTICS (L293N/L293D)">
+                <option value="l1-line-following">⚡ L1-1. Line-Following Robot</option>
+                <option value="l1-obstacle-avoiding">🚧 L1-2. Obstacle-Avoiding Robot</option>
+                <option value="l1-edge-avoiding">⚠️ L1-3. Edge-Avoiding Robot</option>
+                <option value="l1-wall-following">🧱 L1-4. Wall-Following Robot</option>
+                <option value="l1-object-following">🎯 L1-5. Object-Following Robot</option>
+              </optgroup>
+              <optgroup label="LEVEL 2 — BREADBOARD LOGIC & ROBOTICS">
+                <option value="l2-line-following">⚡ L2-1. Line-Following (Breadboard)</option>
+                <option value="l2-obstacle-avoiding">🚧 L2-2. Obstacle-Avoiding (Breadboard)</option>
+                <option value="l2-edge-avoiding">⚠️ L2-3. Edge-Avoiding (Breadboard)</option>
+                <option value="l2-wall-following">🧱 L2-4. Wall-Following (Breadboard)</option>
+                <option value="l2-wireless-rc-car">📻 L2-5. Wireless Remote Control Car (433MHz RF)</option>
+              </optgroup>
+              <optgroup label="LEVEL 3 — CODING ROBOTICS WITH ARDUINO">
+                <option value="l3-line-following">⚡ L3-1. Arduino Line-Following Robot</option>
+                <option value="l3-obstacle-avoiding">🚧 L3-2. Arduino Obstacle-Avoiding Robot</option>
+                <option value="l3-ir-remote-controlled">🎮 L3-3. IR Remote Controlled Robot</option>
+                <option value="l3-bluetooth-controlled">📱 L3-4. Bluetooth Controlled Robot</option>
+                <option value="l3-line-following-automation">🏭 L3-5. Line-Following Automation System</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- REAL STUDENT ROBOT PHOTO THUMBNAIL -->
+          <div class="mb-4 relative group">
+            <img id="modalRobotPhotoThumb" src="/images/line_follower_robot.jpg" alt="Student Built Physical Robot" class="w-full h-32 object-cover rounded-xl border border-goldenYellow/40 shadow-md">
+            <div class="absolute bottom-2 left-2 bg-primaryBlack/80 text-[10px] text-goldenYellow px-2 py-0.5 rounded font-bold backdrop-blur-sm">
+              📸 Physical Student Build Photo
+            </div>
+          </div>
+
+          <!-- EXPLODED VIEW SLIDER -->
+          <div class="mb-4 bg-primaryBlack/50 p-3.5 rounded-xl border border-white/5">
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="text-xs font-semibold text-goldenYellow uppercase tracking-wider flex items-center gap-1">
+                <span>🔧</span> Exploded Assembly View
+              </label>
+              <span id="explodedValText" class="text-xs font-mono text-white font-bold">0%</span>
+            </div>
+            <input type="range" id="explodedSlider" min="0" max="100" value="0" class="w-full accent-goldenYellow cursor-pointer">
+            <p class="text-[11px] text-textGrey mt-1">Separate chassis plates, motors, and sensors in 3D space.</p>
+          </div>
+
+          <!-- HARDWARE SPECIFICATIONS -->
+          <div class="mb-4">
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-2.5 flex items-center gap-1">
+              <span>📊</span> Hardware Specifications
+            </h4>
+            <div class="space-y-1.5 text-xs">
+              <div class="bg-primaryBlack/40 p-2 rounded-lg border border-white/5">
+                <span class="text-goldenYellow font-semibold block">Chassis:</span>
+                <span id="specChassis" class="text-textGrey">Dual-Layer Black Acrylic Matrix</span>
+              </div>
+              <div class="bg-primaryBlack/40 p-2 rounded-lg border border-white/5">
+                <span class="text-goldenYellow font-semibold block">Microcontroller:</span>
+                <span id="specMCU" class="text-textGrey">Arduino Uno R3 (ATmega328P)</span>
+              </div>
+              <div class="bg-primaryBlack/40 p-2 rounded-lg border border-white/5">
+                <span class="text-goldenYellow font-semibold block">Sensors:</span>
+                <span id="specSensors" class="text-textGrey">4-Channel TCRT5000 IR Array</span>
+              </div>
+              <div class="bg-primaryBlack/40 p-2 rounded-lg border border-white/5">
+                <span class="text-goldenYellow font-semibold block">Motors:</span>
+                <span id="specMotors" class="text-textGrey">2x Yellow TT Motors + L298N Driver</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER CTA -->
+        <div class="mt-4 pt-3 border-t border-white/10 text-center">
+          <a href="/courses/robotics-education" class="w-full block bg-goldenYellow hover:bg-goldHover text-black font-bold text-sm py-2.5 px-4 rounded-xl transition-all shadow-lg hover:shadow-goldenYellow/20">
+            Build This Robot in Robotics Course →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/robot3dViewer.js"></script>
+<script>
+  let activeModalViewer = null;
+
+  const ROBOT_PRESET_DATA = {
+    // LEVEL 1: SENSOR ROBOTICS
+    'l1-line-following': {
+      title: 'Level 1: Line-Following Robot (L293N/L293D)',
+      image: '/images/line_follower_robot.jpg',
+      specs: {
+        chassis: 'Dual-Layer Black Acrylic Matrix with Brass Standoffs',
+        microcontroller: 'L293N/L293D Direct Sensor Controller',
+        sensors: '4-Channel Ground-Facing TCRT5000 IR Line Sensor Array',
+        motors: '2x Yellow TT Gear Motors with 65mm Wheels'
+      }
+    },
+    'l1-obstacle-avoiding': {
+      title: 'Level 1: Obstacle-Avoiding Robot (HC-SR04)',
+      image: '/images/obstacle_avoiding_robot.jpg',
+      specs: {
+        chassis: 'Dual-Tier Black Acrylic Chassis Plate',
+        microcontroller: 'L293N Motor Driver Control Module',
+        sensors: 'Front HC-SR04 Ultrasonic Sonar Sensor & Servo Mount',
+        motors: '2x High-Traction Yellow Wheels with Dual Gear Motors'
+      }
+    },
+    'l1-edge-avoiding': {
+      title: 'Level 1: Edge-Avoiding Robot (Cliff IR Sensors)',
+      image: '/images/edge_avoiding_robot.jpg',
+      specs: {
+        chassis: 'Dual-Layer Black Acrylic with Edge Protection Brackets',
+        microcontroller: 'L293N Motor Driver Control Circuit',
+        sensors: 'Top Sonar + Dual Bottom Front IR Cliff Edge Sensors',
+        motors: '2x Yellow Motors with Emergency Reverse Logic'
+      }
+    },
+    'l1-wall-following': {
+      title: 'Level 1: Wall-Following Robot (Side Ultrasonic)',
+      image: '/images/wall_object_following_robot.jpg',
+      specs: {
+        chassis: '4WD Heavy All-Terrain Black Acrylic Chassis',
+        microcontroller: 'L293N Motor Driver Module',
+        sensors: 'Side-Facing HC-SR04 Ultrasonic Sonar Distance Sensor',
+        motors: '4x Yellow TT Gear Motors for 4WD Traction'
+      }
+    },
+    'l1-object-following': {
+      title: 'Level 1: Object-Following Robot (Sonar + IR)',
+      image: '/images/wall_object_following_robot.jpg',
+      specs: {
+        chassis: '4WD Heavy All-Terrain Black Acrylic Chassis',
+        microcontroller: 'L293N Motor Driver Circuit',
+        sensors: 'Front HC-SR04 Ultrasonic Sonar + IR Object Tracker',
+        motors: '4x Yellow TT Motors & Target Cube'
+      }
+    },
+
+    // LEVEL 2: BREADBOARD LOGIC & ROBOTICS
+    'l2-line-following': {
+      title: 'Level 2: Line-Following Robot (Breadboard Build)',
+      image: '/images/line_follower_robot.jpg',
+      specs: {
+        chassis: 'Black Acrylic Chassis with Solderless Breadboard',
+        microcontroller: 'Discrete IR Circuit + 7404/7400 Logic ICs on Breadboard',
+        sensors: '4-Channel TCRT5000 IR Sensor Array on Breadboard',
+        motors: '2x Yellow TT Motors with L293D Motor Driver IC'
+      }
+    },
+    'l2-obstacle-avoiding': {
+      title: 'Level 2: Obstacle-Avoiding Robot (Breadboard Build)',
+      image: '/images/obstacle_avoiding_robot.jpg',
+      specs: {
+        chassis: 'Black Acrylic Chassis with Solderless Breadboard',
+        microcontroller: '7404 NOT Gate IC & L293D Motor Driver IC on Breadboard',
+        sensors: 'Front HC-SR04 Ultrasonic Sonar Sensor',
+        motors: '2x Yellow TT Motors with Logic IC Direction Control'
+      }
+    },
+    'l2-edge-avoiding': {
+      title: 'Level 2: Edge-Avoiding Robot (Breadboard Build)',
+      image: '/images/edge_avoiding_robot.jpg',
+      specs: {
+        chassis: 'Black Acrylic Chassis with Solderless Breadboard',
+        microcontroller: 'Discrete IR Sensor Circuit & L293D IC on Breadboard',
+        sensors: 'Dual Bottom Front IR Cliff Sensors',
+        motors: '2x Yellow TT Motors with Breadboard Reverse Logic'
+      }
+    },
+    'l2-wall-following': {
+      title: 'Level 2: Wall-Following Robot (Breadboard Build)',
+      image: '/images/wall_object_following_robot.jpg',
+      specs: {
+        chassis: 'Black Acrylic Chassis with Solderless Breadboard',
+        microcontroller: 'Logic Gates (7404 / 7400 ICs) & L293D IC on Breadboard',
+        sensors: 'Side-Facing HC-SR04 Ultrasonic Sonar Sensor',
+        motors: '4WD Yellow Motors with Breadboard Distance Logic'
+      }
+    },
+    'l2-wireless-rc-car': {
+      title: 'Level 2: Wireless Remote Control Car (433MHz RF)',
+      image: '/images/wall_object_following_robot.jpg',
+      specs: {
+        chassis: 'Breadboard Chassis + 433MHz RF Transmitter Remote',
+        microcontroller: 'HT12D Decoder IC & L293D Driver IC on Breadboard',
+        sensors: '433MHz RF Receiver Module with Antenna Whip',
+        motors: '4WD Yellow Motors + Handheld 433MHz RF Remote Controller'
+      }
+    },
+
+    // LEVEL 3: CODING ROBOTICS WITH ARDUINO
+    'l3-line-following': {
+      title: 'Level 3: Arduino Line-Following Robot (PID C++)',
+      image: '/images/line_follower_robot.jpg',
+      specs: {
+        chassis: 'Dual-Layer Black Acrylic Matrix with Brass Standoffs',
+        microcontroller: 'Arduino Uno R3 Microcontroller (ATmega328P @ 16MHz)',
+        sensors: '4-Channel Ground TCRT5000 IR Sensor Array',
+        motors: '2x Yellow TT Motors with L293D Shield'
+      }
+    },
+    'l3-obstacle-avoiding': {
+      title: 'Level 3: Arduino Obstacle-Avoiding Robot (Sonar Servo)',
+      image: '/images/obstacle_avoiding_robot.jpg',
+      specs: {
+        chassis: 'Dual-Tier Black Acrylic Chassis Plate',
+        microcontroller: 'Arduino Uno R3 Board + L293D Shield',
+        sensors: 'Front HC-SR04 Ultrasonic Sonar on SG90 Servo Turret',
+        motors: '2x High-Traction Yellow Wheels with PWM Control'
+      }
+    },
+    'l3-ir-remote-controlled': {
+      title: 'Level 3: IR Remote Controlled Robot (Arduino + TSOP)',
+      image: '/images/edge_avoiding_robot.jpg',
+      specs: {
+        chassis: 'Black Acrylic Chassis with IR Remote Keyfob',
+        microcontroller: 'Arduino Uno R3 Board + L293D Shield',
+        sensors: 'TSOP1838 38kHz IR Receiver Module',
+        motors: '2x Yellow Motors + Handheld IR Remote Controller'
+      }
+    },
+    'l3-bluetooth-controlled': {
+      title: 'Level 3: Bluetooth Controlled Robot (HC-05 + App)',
+      image: '/images/wall_object_following_robot.jpg',
+      specs: {
+        chassis: '4WD Heavy All-Terrain Black Acrylic Chassis',
+        microcontroller: 'Arduino Uno R3 Board + L293D Shield',
+        sensors: 'HC-05 Bluetooth Module with Antenna & Status LED',
+        motors: '4WD Yellow Motors + Smartphone Joystick Display'
+      }
+    },
+    'l3-line-following-automation': {
+      title: 'Level 3: Line-Following Automation System (Industrial)',
+      image: '/images/line_follower_robot.jpg',
+      specs: {
+        chassis: 'Heavy Industrial 4WD Chassis Matrix',
+        microcontroller: 'Arduino Uno R3 Board + L293D Shield',
+        sensors: '5-Channel Precision Array + Wheel Encoders + OLED Screen',
+        motors: '4WD High-Torque Motors for Industrial Automation'
+      }
+    }
+  };
+
+  // Add alias mappings
+  ROBOT_PRESET_DATA['line-follower'] = ROBOT_PRESET_DATA['l1-line-following'];
+  ROBOT_PRESET_DATA['obstacle-avoiding'] = ROBOT_PRESET_DATA['l1-obstacle-avoiding'];
+  ROBOT_PRESET_DATA['rover'] = ROBOT_PRESET_DATA['l1-obstacle-avoiding'];
+  ROBOT_PRESET_DATA['edge-avoiding'] = ROBOT_PRESET_DATA['l1-edge-avoiding'];
+  ROBOT_PRESET_DATA['wall-following'] = ROBOT_PRESET_DATA['l1-wall-following'];
+  ROBOT_PRESET_DATA['object-following'] = ROBOT_PRESET_DATA['l1-object-following'];
+  ROBOT_PRESET_DATA['wall-object-following'] = ROBOT_PRESET_DATA['l1-object-following'];
+  ROBOT_PRESET_DATA['wireless-rc-car'] = ROBOT_PRESET_DATA['l2-wireless-rc-car'];
+
+  function updateModalRobotDetails(modelType) {
+    const data = ROBOT_PRESET_DATA[modelType] || ROBOT_PRESET_DATA['l1-line-following'];
+    document.getElementById('modalRobotTitle').innerText = data.title;
+    document.getElementById('modalRobotPhotoThumb').src = data.image;
+    document.getElementById('specChassis').innerText = data.specs.chassis;
+    document.getElementById('specMCU').innerText = data.specs.microcontroller;
+    document.getElementById('specSensors').innerText = data.specs.sensors;
+    document.getElementById('specMotors').innerText = data.specs.motors;
+  }
+
+  function openRobot3dModal(options = {}) {
+    const modal = document.getElementById('robot3dModal');
+    if (!modal) return;
+
+    modal.classList.remove('hidden');
+
+    const modelType = options.modelType || 'l1-line-following';
+    const select = document.getElementById('modalRobotTypeSelect');
+    if (select) select.value = modelType;
+
+    updateModalRobotDetails(modelType);
+
+    // Reset controls UI
+    document.getElementById('explodedSlider').value = 0;
+    document.getElementById('explodedValText').innerText = '0%';
+    document.getElementById('wireframeStateText').innerText = 'OFF';
+    document.getElementById('autoRotateStateText').innerText = 'ON';
+
+    if (activeModalViewer) {
+      activeModalViewer.destroy();
+    }
+
+    setTimeout(() => {
+      activeModalViewer = new Robot3DViewer('modal3dCanvas', {
+        modelType: modelType,
+        autoRotate: true,
+        onPartHover: (partData) => {
+          const overlay = document.getElementById('partInfoOverlay');
+          if (partData) {
+            document.getElementById('hoverPartName').innerText = partData.name;
+            document.getElementById('hoverPartDesc').innerText = partData.description;
+            overlay.classList.remove('hidden');
+          } else {
+            overlay.classList.add('hidden');
+          }
+        }
+      });
+    }, 50);
+  }
+
+  function closeRobot3dModal() {
+    const modal = document.getElementById('robot3dModal');
+    if (modal) modal.classList.add('hidden');
+    if (activeModalViewer) {
+      activeModalViewer.destroy();
+      activeModalViewer = null;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('closeRobot3dModalBtn');
+    if (closeBtn) closeBtn.addEventListener('click', closeRobot3dModal);
+
+    const modal = document.getElementById('robot3dModal');
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeRobot3dModal();
+      });
+    }
+
+    const select = document.getElementById('modalRobotTypeSelect');
+    if (select) {
+      select.addEventListener('change', (e) => {
+        const type = e.target.value;
+        updateModalRobotDetails(type);
+        if (activeModalViewer) {
+          activeModalViewer.buildRobotModel(type);
+        }
+      });
+    }
+
+    const slider = document.getElementById('explodedSlider');
+    if (slider) {
+      slider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value);
+        document.getElementById('explodedValText').innerText = val + '%';
+        if (activeModalViewer) {
+          activeModalViewer.setExplodedView(val / 100);
+        }
+      });
+    }
+
+    const wireframeBtn = document.getElementById('btnToggleWireframe');
+    if (wireframeBtn) {
+      wireframeBtn.addEventListener('click', () => {
+        if (activeModalViewer) {
+          const nextState = !activeModalViewer.options.wireframe;
+          activeModalViewer.setWireframe(nextState);
+          document.getElementById('wireframeStateText').innerText = nextState ? 'ON' : 'OFF';
+        }
+      });
+    }
+
+    const autoRotateBtn = document.getElementById('btnToggleAutoRotate');
+    if (autoRotateBtn) {
+      autoRotateBtn.addEventListener('click', () => {
+        if (activeModalViewer) {
+          const nextState = !activeModalViewer.options.autoRotate;
+          activeModalViewer.setAutoRotate(nextState);
+          document.getElementById('autoRotateStateText').innerText = nextState ? 'ON' : 'OFF';
+        }
+      });
+    }
+
+    const resetCamBtn = document.getElementById('btnResetCam');
+    if (resetCamBtn) {
+      resetCamBtn.addEventListener('click', () => {
+        if (activeModalViewer) {
+          activeModalViewer.resetCamera();
+        }
+      });
+    }
+  });
+</script>

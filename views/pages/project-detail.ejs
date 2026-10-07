@@ -25,6 +25,37 @@
         </div>
       </div>
 
+      <% if (project.category === 'Robotics Projects' || project.has3DModel) { %>
+        <!-- INTERACTIVE 3D STUDENT ROBOT SHOWCASE -->
+        <div style="background: linear-gradient(135deg, rgba(255,201,40,0.08), rgba(21,21,21,0.9)); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 30px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            <div>
+              <div class="badge" style="background: rgba(255,201,40,0.2); color: var(--golden-yellow);">🧊 INTERACTIVE 3D ROBOT CAD VIEW</div>
+              <h3 style="font-size: 1.4rem; font-weight: 700; margin-top: 6px; color: var(--text-white);">Student 3D Robot CAD Inspector</h3>
+            </div>
+            <button onclick="openRobot3dModal({ modelType: '<%= project.model3DType || 'rover' %>', title: '<%= project.title %>', specs: <%= JSON.stringify(project.modelSpecs || {}) %> })" class="btn btn-gold btn-sm">
+              🚀 Fullscreen 3D Inspector
+            </button>
+          </div>
+
+          <p style="color: var(--text-grey); font-size: 0.95rem; margin-bottom: 20px;">
+            Drag to rotate in 360°, scroll to zoom, or click components to inspect internal circuit boards, sensors, and chassis wiring designed by our student.
+          </p>
+
+          <div id="inlineProject3dCanvas" style="width: 100%; height: 380px; background: #0c0c0e; border-radius: var(--radius-md); border: 1px solid rgba(255,201,40,0.2); overflow: hidden; position: relative;"></div>
+
+          <script src="/js/robot3dViewer.js"></script>
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              new Robot3DViewer('inlineProject3dCanvas', {
+                modelType: '<%= project.model3DType || 'rover' %>',
+                autoRotate: true
+              });
+            });
+          </script>
+        </div>
+      <% } %>
+
       <% if (project.detailedContent) { %>
         <div style="background: var(--primary-black); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
           <h4 style="color: var(--text-white); font-size: 1.2rem; margin-bottom: 12px;">Detailed Project Overview:</h4>
@@ -36,4 +67,5 @@
   </div>
 </section>
 
+<%- include('../partials/robot3dModal') %>
 <%- include('../partials/footer') %>

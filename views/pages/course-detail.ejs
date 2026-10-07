@@ -15,21 +15,39 @@
         <img src="<%= course.image %>" alt="<%= course.title %>" style="width: 100%; height: 350px; object-fit: cover;">
       </div>
 
+      <% if (course.category === 'robotics') { %>
+        <!-- 3D ROBOT SHOWCASE BANNER -->
+        <div style="background: linear-gradient(135deg, rgba(255,201,40,0.1), rgba(15,15,18,0.95)); border: 1px solid var(--golden-yellow); border-radius: var(--radius-md); padding: 24px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <div class="badge" style="background: var(--golden-yellow); color: #000; font-weight: 700;">NEW FEATURE 🤖</div>
+            <h3 style="font-size: 1.5rem; color: var(--text-white); margin-top: 6px;">3D View of Robots Built by Our Students</h3>
+            <p style="color: var(--text-grey); font-size: 0.95rem; margin-top: 4px;">Experience interactive 360° CAD models, exploded component views, and part specifications created in LTI Student Robotics Lab.</p>
+          </div>
+          <button onclick="openRobot3dModal({ modelType: 'rover', title: 'LTI Student Autonomous Rover (Level 3)' })" class="btn btn-gold shadow-lg" style="white-space: nowrap;">
+            🎮 Launch Interactive 3D Viewer
+          </button>
+        </div>
+      <% } %>
+
       <% if (course.levels && course.levels.length > 0) { %>
         <h3 style="color: var(--golden-yellow); font-size: 1.5rem; margin-bottom: 20px;">ROBOTICS LEVEL PROGRESSION:</h3>
         <div class="level-progression" style="margin-bottom: 40px;">
-          <% course.levels.forEach(lvl => { %>
-            <div class="level-card">
+          <% course.levels.forEach((lvl, index) => { %>
+            <% const modelPreset = lvl.levelNumber === 1 ? 'line-follower' : lvl.levelNumber === 2 ? 'wireless-rc-car' : 'obstacle-avoiding'; %>
+            <div class="level-card" style="display: flex; flex-direction: column;">
               <div class="level-badge">LEVEL <%= lvl.levelNumber %></div>
               <h4 class="level-title"><%= lvl.title %></h4>
               <div class="level-eligibility"><%= lvl.eligibility %></div>
               <p style="font-size: 0.88rem; color: var(--text-grey); margin-bottom: 12px;"><%= lvl.description %></p>
-              <ul class="topic-list">
+              <ul class="topic-list" style="margin-bottom: auto;">
                 <% lvl.topics.forEach(t => { %>
                   <li><%= t %></li>
                 <% }) %>
               </ul>
-              <a href="/register?course=<%= encodeURIComponent(course.title) %>&level=<%= encodeURIComponent(lvl.title) %>" class="btn btn-gold btn-sm" style="width: 100%; margin-top: 15px;">Register <%= lvl.title %></a>
+              <button onclick="openRobot3dModal({ modelType: '<%= modelPreset %>', title: 'Level <%= lvl.levelNumber %> Student Robot Model – <%= lvl.title %>' })" class="btn btn-outline btn-sm" style="width: 100%; margin-top: 15px; margin-bottom: 8px; border-color: var(--golden-yellow); color: var(--golden-yellow);">
+                🧊 Inspect 3D Robot Model
+              </button>
+              <a href="/register?course=<%= encodeURIComponent(course.title) %>&level=<%= encodeURIComponent(lvl.title) %>" class="btn btn-gold btn-sm" style="width: 100%;">Register <%= lvl.title %></a>
             </div>
           <% }) %>
         </div>
@@ -61,4 +79,5 @@
   </div>
 </section>
 
+<%- include('../partials/robot3dModal') %>
 <%- include('../partials/footer') %>
