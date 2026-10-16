@@ -209,6 +209,10 @@ class Robot3DViewer {
     if (this.options.wireframe) {
       this.setWireframe(true);
     }
+
+    if (this.options.explodedProgress > 0) {
+      this.setExplodedView(this.options.explodedProgress);
+    }
   }
 
   // =========================================================================
@@ -600,29 +604,88 @@ class Robot3DViewer {
   // =========================================================================
 
   build4WDYellowWheels(yellowTireMat, rubberMat, metalMat, darkChassisMat) {
-    const wheelsGroup = new THREE.Group();
-    [[-1.4, 0.45, 1.0], [1.4, 0.45, 1.0], [-1.4, 0.45, -1.0], [1.4, 0.45, -1.0]].forEach(([wx, wy, wz]) => {
-      const singleWheel = new THREE.Group();
-      
+    const wheelConfigs = [
+      {
+        name: 'Front-Left 65mm Wheel & TT Gear Motor',
+        desc: 'All-terrain rubber tire with yellow 5-spoke rim & 1:48 TT DC gear motor (Front-Left)',
+        pos: new THREE.Vector3(-1.4, 0.45, 1.0),
+        explode: new THREE.Vector3(-1.3, 0, 0.35),
+        side: -1
+      },
+      {
+        name: 'Front-Right 65mm Wheel & TT Gear Motor',
+        desc: 'All-terrain rubber tire with yellow 5-spoke rim & 1:48 TT DC gear motor (Front-Right)',
+        pos: new THREE.Vector3(1.4, 0.45, 1.0),
+        explode: new THREE.Vector3(1.3, 0, 0.35),
+        side: 1
+      },
+      {
+        name: 'Rear-Left 65mm Wheel & TT Gear Motor',
+        desc: 'All-terrain rubber tire with yellow 5-spoke rim & 1:48 TT DC gear motor (Rear-Left)',
+        pos: new THREE.Vector3(-1.4, 0.45, -1.0),
+        explode: new THREE.Vector3(-1.3, 0, -0.35),
+        side: -1
+      },
+      {
+        name: 'Rear-Right 65mm Wheel & TT Gear Motor',
+        desc: 'All-terrain rubber tire with yellow 5-spoke rim & 1:48 TT DC gear motor (Rear-Right)',
+        pos: new THREE.Vector3(1.4, 0.45, -1.0),
+        explode: new THREE.Vector3(1.3, 0, -0.35),
+        side: 1
+      }
+    ];
+
+    wheelConfigs.forEach((cfg) => {
+      const wheelGroup = new THREE.Group();
+
+      // 1. Rubber Tire
       const tire = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.36, 32).rotateZ(Math.PI / 2), rubberMat);
-      singleWheel.add(tire);
+      wheelGroup.add(tire);
 
-      const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.38, 16).rotateZ(Math.PI / 2), yellowTireMat);
-      singleWheel.add(rim);
+      // Tire Tread Details (12 grip ridges around outer circumference)
+      for (let t = 0; t < 12; t++) {
+        const tread = new THREE.Mesh(new THREE.BoxGeometry(0.37, 0.04, 0.08), rubberMat);
+        const angle = (t * Math.PI * 2) / 12;
+        tread.position.set(0, Math.sin(angle) * 0.49, Math.cos(angle) * 0.49);
+        tread.rotation.x = angle;
+        wheelGroup.add(tread);
+      }
 
+      // 2. Yellow Rim
+      const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.38, 20).rotateZ(Math.PI / 2), yellowTireMat);
+      wheelGroup.add(rim);
+
+      // 3. 5-Spoke Pattern
       for (let s = 0; s < 5; s++) {
         const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.28, 0.39), yellowTireMat);
         spoke.rotation.x = (s * Math.PI * 2) / 5;
-        singleWheel.add(spoke);
+        wheelGroup.add(spoke);
       }
 
-      const axle = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.42, 12).rotateZ(Math.PI / 2), metalMat);
-      singleWheel.add(axle);
+      // 4. Metal Drive Axle
+      const axle = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.44, 12).rotateZ(Math.PI / 2), metalMat);
+      wheelGroup.add(axle);
 
-      singleWheel.position.set(wx, wy, wz);
-      wheelsGroup.add(singleWheel);
+      // 5. Yellow TT Gearbox Body (inner side facing toward chassis)
+      const motorOffset = cfg.side > 0 ? -0.38 : 0.38;
+      const motorGearbox = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.3, 0.26), yellowTireMat);
+      motorGearbox.position.set(motorOffset, 0, 0);
+      wheelGroup.add(motorGearbox);
+
+      // Metal DC motor can
+      const motorCan = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.26, 12).rotateX(Math.PI / 2), metalMat);
+      motorCan.position.set(motorOffset, 0, -0.15);
+      wheelGroup.add(motorCan);
+
+      // Register separate wheel with outward explosion vector
+      this.createPartFromGroup(
+        wheelGroup,
+        cfg.name,
+        cfg.desc,
+        cfg.pos,
+        cfg.explode
+      );
     });
-    this.createPartFromGroup(wheelsGroup, '4WD Yellow 5-Spoke Wheels & TT Motors', '65mm all-terrain rubber tires with yellow 5-spoke rims', new THREE.Vector3(0, 0, 0), new THREE.Vector3(1.2, 0, 0));
   }
 
   buildArduinoUnoR3Board(pcbBlueMat, darkChassisMat, metalMat) {

@@ -2,13 +2,20 @@ const Project = require('../models/Project');
 const Testimonial = require('../models/Testimonial');
 const ContactMessage = require('../models/ContactMessage');
 const Course = require('../models/Course');
+const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 
 exports.getHomePage = async (req, res) => {
   try {
-    const featuredProjects = await Project.find({ status: 'published' }).limit(3).sort({ createdAt: -1 });
-    const testimonials = await Testimonial.find({ published: true }).limit(3);
-    const courses = await Course.find({ active: true });
+    let featuredProjects = [];
+    let testimonials = [];
+    let courses = [];
+
+    if (mongoose.connection.readyState === 1) {
+      featuredProjects = await Project.find({ status: 'published' }).limit(3).sort({ createdAt: -1 });
+      testimonials = await Testimonial.find({ published: true }).limit(3);
+      courses = await Course.find({ active: true });
+    }
 
     res.render('pages/home', {
       title: 'LTI_COURSES – Learn Today. Build Tomorrow. Innovate Beyond.',
@@ -18,7 +25,12 @@ exports.getHomePage = async (req, res) => {
     });
   } catch (error) {
     console.error('Home Page Error:', error);
-    res.status(500).render('pages/error', { message: 'Server error loading home page' });
+    res.render('pages/home', {
+      title: 'LTI_COURSES – Learn Today. Build Tomorrow. Innovate Beyond.',
+      featuredProjects: [],
+      testimonials: [],
+      courses: []
+    });
   }
 };
 
@@ -49,13 +61,15 @@ exports.postContactMessage = async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
 
-    await ContactMessage.create({
-      name,
-      email,
-      phone,
-      subject: subject || 'General Inquiry',
-      message
-    });
+    if (mongoose.connection.readyState === 1) {
+      await ContactMessage.create({
+        name,
+        email,
+        phone,
+        subject: subject || 'General Inquiry',
+        message
+      });
+    }
 
     req.session.successMsg = 'Thank you for reaching out! Your message has been sent to LTI team. We will contact you soon.';
     res.redirect('/contact');

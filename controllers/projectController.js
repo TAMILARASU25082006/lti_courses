@@ -1,4 +1,5 @@
 const Project = require('../models/Project');
+const mongoose = require('mongoose');
 
 exports.getProjectsPage = async (req, res) => {
   try {
@@ -9,8 +10,7 @@ exports.getProjectsPage = async (req, res) => {
       query.category = selectedCategory;
     }
 
-    const projects = await Project.find(query).sort({ createdAt: -1 });
-
+    const projects = (mongoose.connection.readyState === 1) ? await Project.find(query).sort({ createdAt: -1 }) : [];
     const categories = ['All', 'Robotics Projects', 'Full Stack Projects', 'UI/UX Projects', 'Research & Development'];
 
     res.render('pages/projects', {
@@ -21,14 +21,19 @@ exports.getProjectsPage = async (req, res) => {
     });
   } catch (error) {
     console.error('Projects Page Error:', error);
-    res.status(500).render('pages/error', { message: 'Server error loading internal project showcase' });
+    res.render('pages/projects', {
+      title: 'Internal Projects Showcase | LTI – Learn, Think & Innovate',
+      projects: [],
+      categories: ['All', 'Robotics Projects', 'Full Stack Projects', 'UI/UX Projects', 'Research & Development'],
+      selectedCategory: 'All'
+    });
   }
 };
 
 exports.getProjectDetailPage = async (req, res) => {
   try {
     const { id } = req.params;
-    const project = await Project.findById(id);
+    const project = (mongoose.connection.readyState === 1) ? await Project.findById(id) : null;
 
     // Only allow viewing if published OR if user is admin
     if (!project || (project.status !== 'published' && (!req.session.user || req.session.user.role !== 'admin'))) {
