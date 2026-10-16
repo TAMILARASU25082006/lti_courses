@@ -22,7 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // 3. Serve Static Files
-app.use(express.static(path.join(__dirname, 'public')));
+const publicPath = path.join(__dirname, 'public');
+app.use(express.static(publicPath));
+app.use('/public', express.static(publicPath));
 
 // 4. Session Configuration
 const sessionConfig = {
