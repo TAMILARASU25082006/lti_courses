@@ -4,7 +4,7 @@
 
 <!-- HERO SECTION -->
 <section class="hero">
-  <div class="container hero-grid">
+  <div class="container">
     <div class="hero-content">
       <div class="badge">LEARN TODAY • BUILD TOMORROW • INNOVATE BEYOND</div>
       <h1>BUILD YOUR FUTURE WITH <span class="text-gold">TECHNOLOGY</span></h1>
@@ -13,9 +13,6 @@
         <a href="/courses" class="btn btn-gold">Explore Courses →</a>
         <a href="/register" class="btn btn-outline">Join LTI</a>
       </div>
-    </div>
-    <div class="hero-image-wrapper">
-      <img src="/images/hero_banner.jpg" alt="LTI Technology Workspace">
     </div>
   </div>
 </section>
@@ -91,7 +88,7 @@
 
       <!-- Course 3: UI/UX with AI -->
       <div class="card">
-        <img src="/images/hero_banner.jpg" alt="UI/UX Design with AI" class="card-img-top">
+        <img src="/images/uiux_course.jpg" alt="UI/UX Design with AI" class="card-img-top">
         <div class="badge" style="width: fit-content; margin-bottom: 10px;">1 Month Intensive</div>
         <h3 class="card-title">UI/UX Design with AI</h3>
         <p class="card-text">"Turn your creativity into digital experiences." Master Miro, Figma, Framer, and Behance combined with AI-assisted wireframing, layout systems, and portfolio creation.</p>
@@ -200,14 +197,14 @@
 
     <div class="cards-grid">
       <% testimonials.forEach(t => { %>
-        <div class="card" style="position: relative;">
-          <div style="color: var(--golden-yellow); font-size: 1.2rem; margin-bottom: 10px;">★★★★★</div>
-          <p class="card-text" style="font-style: italic;">"<%= t.content %>"</p>
-          <div style="display: flex; align-items: center; gap: 12px; margin-top: 15px;">
-            <img src="<%= t.avatar %>" alt="<%= t.studentName %>" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-color);">
+        <div class="testimonial-card">
+          <div style="color: var(--golden-yellow); font-size: 1.1rem; margin-bottom: 14px; letter-spacing: 2px;">★★★★★</div>
+          <p class="testimonial-quote">“<%= t.content %>”</p>
+          <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <img src="<%= t.avatar %>" alt="<%= t.studentName %>" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color);">
             <div>
-              <div style="font-weight: 700; color: var(--text-white); font-size: 0.95rem;"><%= t.studentName %></div>
-              <div style="font-size: 0.8rem; color: var(--golden-yellow);"><%= t.role %></div>
+              <div class="testimonial-student-name"><%= t.studentName %></div>
+              <div class="testimonial-student-role"><%= t.role %> • <%= t.courseName %></div>
             </div>
           </div>
         </div>

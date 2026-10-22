@@ -1,4 +1,5 @@
 const Course = require('../models/Course');
+const Project = require('../models/Project');
 
 exports.getCoursesPage = async (req, res) => {
   try {
@@ -31,9 +32,19 @@ exports.getCourseDetailPage = async (req, res) => {
       return res.redirect('/courses');
     }
 
+    let internProjects = [];
+    if (course.category === 'fullstack') {
+      internProjects = await Project.find({
+        category: 'Full Stack Projects',
+        status: 'published',
+        liveUrl: { $ne: '' }
+      }).sort({ createdAt: -1 });
+    }
+
     res.render('pages/course-detail', {
       title: `${course.title} | LTI Courses`,
-      course
+      course,
+      internProjects
     });
   } catch (error) {
     console.error('Course Detail Error:', error);

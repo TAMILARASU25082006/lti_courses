@@ -146,7 +146,7 @@ const seedDataHelper = async () => {
           ],
           eligibility: 'Students, Designers, Creators & Aspiring UI/UX Engineers',
           duration: '1 Month',
-          image: '/images/hero_banner.jpg'
+          image: '/images/uiux_course.jpg'
         }
       ];
       await Course.insertMany(courses);
@@ -254,7 +254,7 @@ const seedDataHelper = async () => {
           description: 'Interactive UI/UX prototype created in Figma and Framer displaying personalized course progression and dark mode design components.',
           detailedContent: 'Designed following strict micro-interaction patterns and high-contrast accessible styling with golden yellow accents.',
           technologies: ['Figma', 'Framer', 'Miro', 'Behance'],
-          image: '/images/hero_banner.jpg',
+          image: '/images/uiux_course.jpg',
           status: 'published',
           featured: true,
           createdBy: admin._id
@@ -263,6 +263,58 @@ const seedDataHelper = async () => {
       await Project.insertMany(projects);
       console.log('✔ Internal Projects auto-seeded.');
     }
+
+    // Ensure the 3 live student/intern full stack projects exist
+    const liveInternProjects = [
+      {
+        title: 'M1 Mobiles – Production E-Commerce Store',
+        category: 'Full Stack Projects',
+        description: 'High-performance online store for smartphones & smart accessories with real-time product catalogs, cart state management, checkout system, and Razorpay payment integration.',
+        detailedContent: 'Production e-commerce platform developed by LTI Full Stack Interns. Built using Next.js, React, Node.js, and Tailwind CSS. Features dynamic product filtering, cart drawer, Razorpay checkout gateway, order management dashboard, and mobile-first responsiveness.',
+        technologies: ['Next.js', 'React', 'Node.js', 'Tailwind CSS', 'Razorpay', 'RESTful API'],
+        liveUrl: 'https://www.m1mobiles.com/',
+        studentAuthor: 'LTI Full Stack Interns',
+        image: '/images/fullstack_course.jpg',
+        status: 'published',
+        featured: true,
+        createdBy: admin ? admin._id : null
+      },
+      {
+        title: 'Asma Khatoon G – Developer & UI/UX Portfolio',
+        category: 'Full Stack Projects',
+        description: 'Modern developer portfolio highlighting interactive case studies, design system mastery, polished micro-interactions, dark aesthetic UI, and fast Vercel edge deployment.',
+        detailedContent: 'Personal developer portfolio engineered by Asma Khatoon G, student and intern at LTI. Built using Next.js, React, and Tailwind CSS, featuring interactive project showcases, responsive layouts, creative UI/UX micro-interactions, and automated CI/CD deployment on Vercel.',
+        technologies: ['Next.js', 'React', 'Tailwind CSS', 'Figma', 'Vercel', 'UI/UX Design'],
+        liveUrl: 'https://asma-portfolio-delta.vercel.app/',
+        studentAuthor: 'Asma Khatoon G (LTI Intern)',
+        image: '/images/uiux_course.jpg',
+        status: 'published',
+        featured: true,
+        createdBy: admin ? admin._id : null
+      },
+      {
+        title: 'LTI Web Studio – Digital Agency & Client Solutions',
+        category: 'Full Stack Projects',
+        description: 'Official digital development agency website engineered by LTI student developers, delivering corporate business websites, responsive client portals, fast loading speeds, and SEO architecture.',
+        detailedContent: 'Production digital solutions and web development agency portal built by LTI Web Dev Interns. Engineered with modern responsive layouts, accessible UI components, structured SEO meta tags, dynamic service quote forms, and client project presentations.',
+        technologies: ['Full Stack Web', 'JavaScript (ES6+)', 'Modern CSS3', 'REST APIs', 'SEO Architecture'],
+        liveUrl: 'https://www.ltiwebdev.in/',
+        studentAuthor: 'LTI Student Web Dev Team',
+        image: '/images/fullstack_course.jpg',
+        status: 'published',
+        featured: true,
+        createdBy: admin ? admin._id : null
+      }
+    ];
+
+    for (const proj of liveInternProjects) {
+      await Project.findOneAndUpdate(
+        { liveUrl: proj.liveUrl },
+        proj,
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+    }
+    console.log('✔ Live intern full stack projects synced.');
 
     // 4. Seed Testimonials
     const existingTestimonials = await Testimonial.countDocuments();

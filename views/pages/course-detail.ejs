@@ -2,6 +2,104 @@
 <%- include('../partials/navbar') %>
 <%- include('../partials/flash') %>
 
+<% if (course.category === 'robotics') { %>
+<!-- ROBOTICS FULL-WIDTH RESPONSIVE HERO BANNER -->
+<section class="robotics-hero" role="region" aria-label="Robotics Course Hero Banner">
+  <div class="container robotics-hero-container">
+    <div class="robotics-hero-content">
+      <div class="badge badge-robotics-blue">ROBOTICS COURSE</div>
+      <h1 class="robotics-hero-title">Build. Code. <span class="text-robotics-blue">Bring Ideas to Life.</span></h1>
+      <p class="robotics-hero-desc">Learn robotics from the basics to advanced projects. Design, build and program intelligent machines that solve real-world problems.</p>
+      
+      <!-- FEATURE PILLARS -->
+      <div class="robotics-features-grid">
+        <div class="robotics-feature-item">
+          <span class="feature-icon">🦾</span>
+          <span>Hands-on Learning</span>
+        </div>
+        <div class="robotics-feature-item">
+          <span class="feature-icon">💻</span>
+          <span>Real Projects</span>
+        </div>
+        <div class="robotics-feature-item">
+          <span class="feature-icon">⚙️</span>
+          <span>Expert Guidance</span>
+        </div>
+        <div class="robotics-feature-item">
+          <span class="feature-icon">⚡</span>
+          <span>Arduino & Embedded</span>
+        </div>
+      </div>
+
+      <!-- HERO ACTION BUTTONS -->
+      <div class="robotics-hero-actions">
+        <a href="/register?course=<%= encodeURIComponent(course.title) %>" class="btn btn-robotics-blue shadow-lg">
+          Start Your Robotics Journey →
+        </a>
+        <button onclick="openRobot3dModal({ modelType: 'rover', title: 'LTI Student Autonomous Rover (Level 3)' })" class="btn btn-outline" style="border-color: rgba(56, 189, 248, 0.5); color: #38bdf8;">
+          🎮 Launch 3D Viewer
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 40px;">
+  <div class="container">
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+<% } else if (course.category === 'fullstack') { %>
+<!-- FULL STACK FULL-WIDTH RESPONSIVE HERO BANNER -->
+<section class="fullstack-hero" role="region" aria-label="Full Stack Web Development Hero Banner">
+  <div class="container fullstack-hero-container">
+    <div class="fullstack-hero-content">
+      <div class="badge badge-fullstack-gold">FULL STACK WEB DEVELOPMENT</div>
+      <h1 class="fullstack-hero-title">Architect. Code. <span class="text-gold">Deploy to Production.</span></h1>
+      <p class="fullstack-hero-desc">Master full stack web development from scratch. Build production-ready web applications using modern JavaScript, React, Node.js, Express, and MongoDB.</p>
+      
+      <!-- FEATURE PILLARS -->
+      <div class="fullstack-features-grid">
+        <div class="fullstack-feature-item">
+          <span class="feature-icon">⚡</span>
+          <span>Modern ES6+ & React</span>
+        </div>
+        <div class="fullstack-feature-item">
+          <span class="feature-icon">🚀</span>
+          <span>Node.js & Express APIs</span>
+        </div>
+        <div class="fullstack-feature-item">
+          <span class="feature-icon">🗄️</span>
+          <span>MongoDB & Atlas Cloud</span>
+        </div>
+        <div class="fullstack-feature-item">
+          <span class="feature-icon">🌐</span>
+          <span>Live Production Deployments</span>
+        </div>
+      </div>
+
+      <!-- HERO STAT STRIP -->
+      <div class="fullstack-stat-strip">
+        <div class="stat-pill"><span class="stat-num">200+</span> Interns Trained</div>
+        <div class="stat-pill"><span class="stat-num">3 Months</span> Practical Program</div>
+        <div class="stat-pill"><span class="stat-num">100%</span> Real-World Projects</div>
+      </div>
+
+      <!-- HERO ACTION BUTTONS -->
+      <div class="fullstack-hero-actions">
+        <a href="/register?course=<%= encodeURIComponent(course.title) %>" class="btn btn-gold shadow-lg">
+          Start Full Stack Training →
+        </a>
+        <a href="#intern-projects" class="btn btn-outline" style="border-color: rgba(255, 201, 40, 0.4); color: var(--golden-yellow);">
+          👀 View Live Intern Projects ↓
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 40px;">
+  <div class="container">
+    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+<% } else { %>
 <section class="section" style="padding-top: 60px;">
   <div class="container">
     <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
@@ -14,6 +112,7 @@
       <div class="hero-image-wrapper" style="margin-bottom: 40px; max-height: 350px;">
         <img src="<%= course.image %>" alt="<%= course.title %>" style="width: 100%; height: 350px; object-fit: cover;">
       </div>
+<% } %>
 
       <% if (course.category === 'robotics') { %>
         <!-- 3D ROBOT SHOWCASE BANNER -->
@@ -50,6 +149,187 @@
               <a href="/register?course=<%= encodeURIComponent(course.title) %>&level=<%= encodeURIComponent(lvl.title) %>" class="btn btn-gold btn-sm" style="width: 100%;">Register <%= lvl.title %></a>
             </div>
           <% }) %>
+        </div>
+      <% } %>
+
+      <% if (course.category === 'fullstack') { %>
+        <!-- REAL-WORLD INTERN & STUDENT PROJECTS SHOWCASE -->
+        <div class="intern-projects-section" id="intern-projects">
+          <div class="intern-projects-header">
+            <div class="badge" style="background: rgba(255, 201, 40, 0.15); color: var(--golden-yellow); border: 1px solid rgba(255, 201, 40, 0.4); font-weight: 700; margin-bottom: 10px;">
+              PROVEN TRACK RECORD • 200+ INTERNS TRAINED
+            </div>
+            <h2 class="intern-showcase-title">
+              Real-World Projects Built by Our <span class="text-gold">Interns & Students</span>
+            </h2>
+            <p class="intern-showcase-desc">
+              At LTI, full stack web development is 100% hands-on and practical. Our trainees build and deploy live, production-grade web applications to the internet. Explore live websites engineered by our students and interns:
+            </p>
+          </div>
+
+          <div class="intern-projects-grid">
+            <!-- PROJECT 1: M1 MOBILES -->
+            <div class="intern-project-card">
+              <div class="intern-card-header">
+                <span class="intern-type-pill">E-Commerce Platform</span>
+                <span class="live-status-pill">
+                  <span class="live-pulse-dot"></span> Live Website
+                </span>
+              </div>
+
+              <div class="intern-card-body">
+                <div class="intern-author-tag">
+                  <span>👨‍💻</span> Built by LTI Full Stack Interns
+                </div>
+                <h3 class="intern-project-title">M1 Mobiles – Online Store</h3>
+                <div class="intern-domain-preview">
+                  <span class="domain-icon">🔗</span>
+                  <a href="https://www.m1mobiles.com/" target="_blank" rel="noopener noreferrer" class="domain-link" id="link-m1mobiles">
+                    https://www.m1mobiles.com/ ↗
+                  </a>
+                </div>
+                <p class="intern-project-summary">
+                  Production-grade e-commerce application for smartphones and digital accessories. Engineered with dynamic product catalog filters, responsive cart state, order management dashboard, and secure Razorpay payment integration.
+                </p>
+
+                <div class="intern-highlights-list">
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Dynamic product catalog & brand filter</div>
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Shopping cart & real-time order state</div>
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Razorpay payment gateway integration</div>
+                </div>
+
+                <div class="intern-tech-tags">
+                  <span class="intern-tech-pill">Next.js</span>
+                  <span class="intern-tech-pill">React</span>
+                  <span class="intern-tech-pill">Node.js</span>
+                  <span class="intern-tech-pill">Tailwind CSS</span>
+                  <span class="intern-tech-pill">Razorpay</span>
+                  <span class="intern-tech-pill">RESTful API</span>
+                </div>
+              </div>
+
+              <div class="intern-card-footer">
+                <a href="https://www.m1mobiles.com/" target="_blank" rel="noopener noreferrer" class="btn-live-project" id="btn-visit-m1mobiles" aria-label="Visit M1 Mobiles Live Website">
+                  <span>Explore Live Website</span>
+                  <span class="btn-arrow">↗</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- PROJECT 2: ASMA PORTFOLIO -->
+            <div class="intern-project-card">
+              <div class="intern-card-header">
+                <span class="intern-type-pill">Developer & UI/UX Portfolio</span>
+                <span class="live-status-pill">
+                  <span class="live-pulse-dot"></span> Live on Vercel
+                </span>
+              </div>
+
+              <div class="intern-card-body">
+                <div class="intern-author-tag">
+                  <span>👩‍💻</span> Built by Asma Khatoon G (LTI Intern)
+                </div>
+                <h3 class="intern-project-title">Asma Khatoon G – Portfolio</h3>
+                <div class="intern-domain-preview">
+                  <span class="domain-icon">🔗</span>
+                  <a href="https://asma-portfolio-delta.vercel.app/" target="_blank" rel="noopener noreferrer" class="domain-link" id="link-asma-portfolio">
+                    asma-portfolio-delta.vercel.app ↗
+                  </a>
+                </div>
+                <p class="intern-project-summary">
+                  High-performance personal developer portfolio and interactive UI/UX case study showcase. Built using modern React component architecture, smooth micro-interactions, dark aesthetic design system, and automated Vercel edge deployment.
+                </p>
+
+                <div class="intern-highlights-list">
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Interactive UI/UX case studies & prototypes</div>
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Modern dark/light design system</div>
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Automated CI/CD deployment on Vercel</div>
+                </div>
+
+                <div class="intern-tech-tags">
+                  <span class="intern-tech-pill">Next.js</span>
+                  <span class="intern-tech-pill">React</span>
+                  <span class="intern-tech-pill">Tailwind CSS</span>
+                  <span class="intern-tech-pill">Figma</span>
+                  <span class="intern-tech-pill">Vercel</span>
+                  <span class="intern-tech-pill">UI/UX Design</span>
+                </div>
+              </div>
+
+              <div class="intern-card-footer">
+                <a href="https://asma-portfolio-delta.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-live-project" id="btn-visit-asma" aria-label="Visit Asma Khatoon G Portfolio">
+                  <span>Explore Live Website</span>
+                  <span class="btn-arrow">↗</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- PROJECT 3: LTI WEB STUDIO -->
+            <div class="intern-project-card">
+              <div class="intern-card-header">
+                <span class="intern-type-pill">Digital Agency Platform</span>
+                <span class="live-status-pill">
+                  <span class="live-pulse-dot"></span> Live Website
+                </span>
+              </div>
+
+              <div class="intern-card-body">
+                <div class="intern-author-tag">
+                  <span>🚀</span> Built by LTI Web Dev Interns
+                </div>
+                <h3 class="intern-project-title">LTI Web Studio – Agency</h3>
+                <div class="intern-domain-preview">
+                  <span class="domain-icon">🔗</span>
+                  <a href="https://www.ltiwebdev.in/" target="_blank" rel="noopener noreferrer" class="domain-link" id="link-ltiwebdev">
+                    https://www.ltiwebdev.in/ ↗
+                  </a>
+                </div>
+                <p class="intern-project-summary">
+                  Official web development studio agency website engineered by LTI student developers. Features enterprise client solutions, responsive service pages, lead capture workflows, fast page speed, and SEO architecture.
+                </p>
+
+                <div class="intern-highlights-list">
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Enterprise client portal & service showcase</div>
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> SEO-optimized semantic HTML5 architecture</div>
+                  <div class="highlight-item"><span class="highlight-dot">✓</span> Dynamic lead capture & inquiry forms</div>
+                </div>
+
+                <div class="intern-tech-tags">
+                  <span class="intern-tech-pill">Full Stack</span>
+                  <span class="intern-tech-pill">JavaScript</span>
+                  <span class="intern-tech-pill">CSS3 Grid</span>
+                  <span class="intern-tech-pill">REST APIs</span>
+                  <span class="intern-tech-pill">SEO Setup</span>
+                  <span class="intern-tech-pill">Production Host</span>
+                </div>
+              </div>
+
+              <div class="intern-card-footer">
+                <a href="https://www.ltiwebdev.in/" target="_blank" rel="noopener noreferrer" class="btn-live-project" id="btn-visit-ltiwebdev" aria-label="Visit LTI Web Studio Live Website">
+                  <span>Explore Live Website</span>
+                  <span class="btn-arrow">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTERN INCENTIVE CALLOUT BANNER -->
+          <div class="intern-callout-banner">
+            <div class="callout-icon-col">
+              <span>🏆</span>
+            </div>
+            <div class="callout-text-col">
+              <h4 class="callout-heading">Want to Graduate with Live Production Projects Like These?</h4>
+              <p class="callout-subtext">
+                Every student in our 3-Month Full Stack Web Development program builds and launches live projects into production, complete with Git version control, custom domains, and portfolio deployment.
+              </p>
+            </div>
+            <div class="callout-action-col">
+              <a href="/register?course=<%= encodeURIComponent(course.title) %>" class="btn btn-gold btn-md" style="white-space: nowrap;">
+                Join Full Stack Training →
+              </a>
+            </div>
+          </div>
         </div>
       <% } %>
 

@@ -64,21 +64,25 @@
 }
 
 .stat-number {
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  font-weight: 700;
   color: var(--golden-yellow);
   line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 .stat-label {
-  font-size: 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-grey);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
   margin-top: 6px;
 }
 
-/* Data Tables */
+/* Data Tables (Inter Typography) */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
@@ -92,14 +96,19 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
 }
 
 .admin-table th {
   background: var(--dark-charcoal);
   padding: 14px 18px;
   color: var(--golden-yellow);
+  font-family: var(--font-body);
   font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  text-transform: uppercase;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -107,6 +116,8 @@
   padding: 14px 18px;
   border-bottom: 1px solid var(--border-subtle);
   color: var(--text-white);
+  font-size: 0.92rem;
+  letter-spacing: -0.005em;
 }
 
 .admin-table tr:hover {

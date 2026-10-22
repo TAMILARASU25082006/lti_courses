@@ -27,6 +27,11 @@ const projectSchema = new mongoose.Schema({
     type: String,
     default: '/images/default-project.jpg'
   },
+  liveUrl: {
+    type: String,
+    default: '',
+    trim: true
+  },
   status: {
     type: String,
     enum: ['published', 'unpublished'],
