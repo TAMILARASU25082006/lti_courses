@@ -337,7 +337,7 @@
         <div>
           <h3 style="color: var(--golden-yellow); font-size: 1.3rem; margin-bottom: 14px;">Topics Covered</h3>
           <ul class="topic-list" style="columns: 2;">
-            <% course.topics.forEach(t => { %>
+            <% (course.topics || []).forEach(t => { %>
               <li><%= t %></li>
             <% }) %>
           </ul>
@@ -345,7 +345,7 @@
         <div>
           <h3 style="color: var(--golden-yellow); font-size: 1.3rem; margin-bottom: 14px;">Course Highlights</h3>
           <ul class="topic-list">
-            <% course.highlights.forEach(h => { %>
+            <% (course.highlights || []).forEach(h => { %>
               <li><%= h %></li>
             <% }) %>
           </ul>

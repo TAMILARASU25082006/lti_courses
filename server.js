@@ -38,20 +38,31 @@ const sessionConfig = {
   }
 };
 
-// Use MongoStore if a real external MongoDB URI (e.g. MongoDB Atlas) is configured
+// Use MongoStore only if a valid, non-placeholder MongoDB Atlas URI is configured
 const activeMongoUri = process.env.MONGODB_URI;
-if (activeMongoUri && activeMongoUri.startsWith('mongodb') && !activeMongoUri.includes('127.0.0.1')) {
+if (
+  activeMongoUri &&
+  activeMongoUri.startsWith('mongodb') &&
+  !activeMongoUri.includes('<db_password>') &&
+  !activeMongoUri.includes('127.0.0.1')
+) {
   try {
-    sessionConfig.store = MongoStore.create({
+    const store = MongoStore.create({
       mongoUrl: activeMongoUri,
       collectionName: 'sessions',
       ttl: 24 * 60 * 60,
       autoRemove: 'native'
     });
+    store.on('error', (err) => {
+      console.warn('[MongoStore Session Warning]:', err.message);
+    });
+    sessionConfig.store = store;
     console.log('✔ Session store connected to MongoDB Atlas.');
   } catch (err) {
-    console.warn('[Session Warning]: Falling back to in-memory session store.');
+    console.warn('[Session Warning]: Falling back to in-memory session store:', err.message);
   }
+} else {
+  console.log('✔ Using memory session store (safe for local dev and serverless).');
 }
 
 app.use(session(sessionConfig));

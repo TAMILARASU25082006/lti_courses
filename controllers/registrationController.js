@@ -1,10 +1,24 @@
 const Registration = require('../models/Registration');
 const Course = require('../models/Course');
+const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
+const { defaultCourses } = require('../utils/defaultData');
+
+const getCourseList = async () => {
+  if (mongoose.connection.readyState === 1) {
+    try {
+      const dbCourses = await Course.find({ active: true });
+      if (dbCourses && dbCourses.length > 0) return dbCourses;
+    } catch (e) {
+      console.warn('[DB Course fetch warning]:', e.message);
+    }
+  }
+  return defaultCourses;
+};
 
 exports.getRegisterPage = async (req, res) => {
   try {
-    const courses = await Course.find({ active: true });
+    const courses = await getCourseList();
     const selectedCourseQuery = req.query.course || '';
     const selectedLevelQuery = req.query.level || '';
 
@@ -16,14 +30,19 @@ exports.getRegisterPage = async (req, res) => {
     });
   } catch (error) {
     console.error('Register Page Error:', error);
-    res.status(500).render('pages/error', { message: 'Server error loading registration page' });
+    res.render('pages/register', {
+      title: 'Course Registration | LTI_COURSES',
+      courses: defaultCourses,
+      selectedCourseQuery: req.query.course || '',
+      selectedLevelQuery: req.query.level || ''
+    });
   }
 };
 
 exports.postRegister = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const courses = await Course.find({ active: true });
+    const courses = await getCourseList();
     return res.status(400).render('pages/register', {
       title: 'Course Registration | LTI_COURSES',
       courses,

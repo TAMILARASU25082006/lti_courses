@@ -4,6 +4,7 @@ const ContactMessage = require('../models/ContactMessage');
 const Course = require('../models/Course');
 const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
+const { defaultCourses, defaultProjects, defaultTestimonials } = require('../utils/defaultData');
 
 exports.getHomePage = async (req, res) => {
   try {
@@ -17,6 +18,16 @@ exports.getHomePage = async (req, res) => {
       courses = await Course.find({ active: true });
     }
 
+    if (!courses || courses.length === 0) {
+      courses = defaultCourses;
+    }
+    if (!featuredProjects || featuredProjects.length === 0) {
+      featuredProjects = defaultProjects.filter(p => p.featured).slice(0, 3);
+    }
+    if (!testimonials || testimonials.length === 0) {
+      testimonials = defaultTestimonials;
+    }
+
     res.render('pages/home', {
       title: 'LTI_COURSES – Learn Today. Build Tomorrow. Innovate Beyond.',
       featuredProjects,
@@ -27,9 +38,9 @@ exports.getHomePage = async (req, res) => {
     console.error('Home Page Error:', error);
     res.render('pages/home', {
       title: 'LTI_COURSES – Learn Today. Build Tomorrow. Innovate Beyond.',
-      featuredProjects: [],
-      testimonials: [],
-      courses: []
+      featuredProjects: defaultProjects.filter(p => p.featured).slice(0, 3),
+      testimonials: defaultTestimonials,
+      courses: defaultCourses
     });
   }
 };
