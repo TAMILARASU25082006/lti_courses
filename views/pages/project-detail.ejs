@@ -4,17 +4,13 @@
 
 <section class="section" style="padding-top: 60px;">
   <div class="container" style="max-width: 900px;">
-    <div style="background: var(--dark-charcoal); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px;">
+    <div style="background: linear-gradient(135deg, rgba(8, 8, 8, 0.96) 0%, rgba(21, 21, 21, 0.92) 50%, rgba(15, 15, 18, 0.85) 100%), url('<%= project.image %>') center right / cover no-repeat; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 40px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);">
       <a href="/projects" class="text-gold" style="font-size: 0.9rem; font-weight: 600;">← Back to All Projects</a>
 
       <div class="badge" style="margin-top: 16px; margin-bottom: 12px;"><%= project.category %></div>
       <h1 style="font-size: 2.5rem; margin-bottom: 16px;"><%= project.title %></h1>
       
-      <p style="color: var(--text-grey); font-size: 1.1rem; margin-bottom: 24px;"><%= project.description %></p>
-
-      <div class="hero-image-wrapper" style="margin-bottom: 30px;">
-        <img src="<%= project.image %>" alt="<%= project.title %>" style="width: 100%; max-height: 400px; object-fit: cover;">
-      </div>
+      <p style="color: var(--text-grey); font-size: 1.1rem; margin-bottom: 28px; max-width: 750px;"><%= project.description %></p>
 
       <div style="margin-bottom: 30px;">
         <h4 style="color: var(--golden-yellow); font-size: 1.1rem; margin-bottom: 10px;">Technologies Used:</h4>

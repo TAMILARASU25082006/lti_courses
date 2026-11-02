@@ -1,8 +1,10 @@
 const http = require('http');
 
+const port = process.env.PORT || 3000;
+
 const testUrl = (path) => {
   return new Promise((resolve, reject) => {
-    http.get(`http://localhost:5000${path}`, (res) => {
+    http.get(`http://localhost:${port}${path}`, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
